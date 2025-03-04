@@ -1,8 +1,29 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import  Header from "./components/header/header";
+import "./Dashboard.css";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+
+  const games = [
+    {
+      id: "perguntas",
+      name: "Jogo de Perguntas",
+      description: "Crie quizzes interativos e teste seus conhecimentos.",
+      image: "/images/perguntas.png",
+      route: "/create-quizz"
+    },
+    {
+      id: "forca",
+      name: "Jogo da Forca",
+      description: "Crie desafios de forca e veja se seus amigos acertam as palavras.",
+      image: "/images/forca.png",
+      route: "/criar-forca"
+    }
+  ];
+
+
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -28,10 +49,21 @@ const Dashboard = () => {
   };
 
   return (
-    <div>
-      <h1>Bem-vindo ao sistema de perguntas!</h1>
-      <button onClick={handleLogout}>Sair</button>
-    </div>
+    <>
+      <Header />
+      <div className="dashboard-container">
+        <h2>Escolha um jogo para criar</h2>
+        <div className="games-grid">
+          {games.map((game) => (
+            <div key={game.id} className="game-card" onClick={() => navigate(game.route)}>
+              <img src={game.image} alt={game.name} />
+              <h3>{game.name}</h3>
+              <p>{game.description}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
   );
 };
 

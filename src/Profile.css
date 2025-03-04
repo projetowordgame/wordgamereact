@@ -1,0 +1,78 @@
+/* Container do perfil */
+.profile-container {
+    width: 100%;
+    max-width: 600px;
+    min-width: 400px;
+    margin: 80px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    text-align: center;
+}
+
+/* Título do perfil */
+.profile-container h2 {
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Formulário do perfil */
+.profile-container form {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinha os itens à esquerda */
+    width: 100%;
+    gap: 15px;
+}
+
+/* Rótulos (labels) dos campos */
+.profile-container form label {
+    text-align: left;
+    font-weight: bold;
+    color: #080707;
+    display: block;
+    margin-bottom: 5px;
+}
+
+/* Campos de input */
+.profile-container form input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+/* Botão de salvar */
+.profile-container button {
+    width: 100%;
+    background: #2575fc;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.profile-container button:hover {
+    background: #1a5bcc;
+}
+
+/* Botão de deletar conta */
+.profile-container .delete-btn {
+    background: red;
+    color: white;
+    margin-top: 10px;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.profile-container .delete-btn:hover {
+    background: darkred;
+}

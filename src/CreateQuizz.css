@@ -1,0 +1,74 @@
+.create-quizz-container {
+    max-width: 600px;
+    margin: 80px auto 40px auto; /* Empurra o formulário para baixo e dá um espaço na parte inferior */
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  .create-quizz-container h2 {
+    text-align: center;
+  }
+  
+
+  .create-quizz-container input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box; /* ✅ Garante que padding e borda não ultrapassem o tamanho */
+  }
+  
+  .question-block input {
+    width: calc(100% - 16px); /* ✅ Ajusta para não ultrapassar a borda do container */
+  }
+
+
+  .question-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  
+  
+  .delete-icon {
+    color: red;
+    cursor: pointer;
+    transition: transform 0.2s;
+    width: 24px; /* Aumenta o tamanho */
+    height: 24px; /* Aumenta o tamanho */
+  }
+  
+  .delete-icon:hover {
+    transform: scale(1.3); /* Efeito ao passar o mouse */
+  }
+  
+  
+  .question-block {
+    margin-bottom: 15px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+  }
+  
+  .answer-block {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .button {
+    padding: 8px 12px;
+    background: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background: #0056b3;
+  }
+  

@@ -1,0 +1,63 @@
+/* Garante que o Dashboard não afete outras telas */
+.dashboard-container {
+  max-width: 900px;
+  margin: 80px auto 20px;
+  padding: 20px;
+  text-align: center;
+}
+
+/* Escopo apenas para o título dentro do Dashboard */
+.dashboard-container h2 {
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Layout responsivo para os jogos */
+.dashboard-container .games-grid {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+/* Cartões de jogo */
+.dashboard-container .game-card {
+  background: white;
+  width: 250px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.2s ease-in-out;
+}
+
+.dashboard-container .game-card:hover {
+  transform: scale(1.05);
+}
+
+/* Imagem do jogo */
+.dashboard-container .game-card img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+/* Nome do jogo */
+.dashboard-container .game-card h3 {
+  margin: 10px 0;
+  color: #2575fc;
+}
+
+/* Descrição do jogo */
+.dashboard-container .game-card p {
+  color: #555;
+  font-size: 14px;
+}
+
+html, body {
+  overflow-x: hidden; /* Impede barra lateral horizontal */
+  overflow-y: auto; /* Permite rolagem apenas se necessário */
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
