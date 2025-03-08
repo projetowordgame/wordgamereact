@@ -1,0 +1,80 @@
+.my-activities-container {
+    max-width: 800px;
+    margin: 80px auto 20px;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  .my-activities-container h2 {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-list {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 20px;
+    justify-content: center;
+  }
+  
+  
+  .quiz-card:hover {
+    transform: scale(1.05);
+  }
+
+  .quiz-card img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  
+  .quiz-card h3 {
+    font-size: 1.1rem;
+  }
+
+
+
+  .quiz-card {
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    width: 250px;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    background: #fff;
+    text-align: center;
+    position: relative;
+  }
+  
+  .quiz-image {
+    width: 150px;
+    height: auto;
+  }
+  
+  .delete-icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: red;
+    font-size: 20px;
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .delete-icon:hover {
+    transform: scale(1.2);
+  }
+  
+
+
+
+  

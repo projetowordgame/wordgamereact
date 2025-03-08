@@ -25,7 +25,7 @@ const Header = () => {
       <nav>
         {user ? (
           <div className="nav-links">
-            <button onClick={() => navigate("/minhas-atividades")}>Minhas Atividades</button>
+            <button onClick={() => navigate("/my-activities")}>Minhas Atividades</button>
             <button onClick={() => navigate("/dashboard")}>Criar Atividade</button>
             <div className="user-menu">
               <button className="user-btn">{user.name} ▼</button>
