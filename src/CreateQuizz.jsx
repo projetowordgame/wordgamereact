@@ -144,7 +144,7 @@ const CreateQuizz = () => {
                   onChange={(e) => updateQuestion(qIndex, e.target.value)}
                   required
                 />
-                <Trash2 className="delete-icon" onClick={() => deleteQuestion(qIndex)} /> {/* 🔴 Ícone de lixeira para excluir pergunta */}
+                <Trash2 className="delete-icon-quizz" onClick={() => deleteQuestion(qIndex)} /> {/* 🔴 Ícone de lixeira para excluir pergunta */}
               </div>
 
               <h4>Respostas:</h4>
@@ -163,7 +163,7 @@ const CreateQuizz = () => {
                     checked={a.isCorrect}
                     onChange={() => setCorrectAnswer(qIndex, aIndex)}
                   />
-                  <Trash2 className="delete-icon" onClick={() => deleteAnswer(qIndex, aIndex)} /> {/* 🔴 Ícone de lixeira para excluir resposta */}
+                  <Trash2 className="delete-icon-quizz" onClick={() => deleteAnswer(qIndex, aIndex)} /> {/* 🔴 Ícone de lixeira para excluir resposta */}
                 </div>
               ))}
 

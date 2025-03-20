@@ -33,7 +33,7 @@
   }
   
   
-  .delete-icon {
+  .delete-icon-quizz {
     color: red;
     cursor: pointer;
     transition: transform 0.2s;
@@ -41,7 +41,7 @@
     height: 24px; /* Aumenta o tamanho */
   }
   
-  .delete-icon:hover {
+  .delete-icon-quizz:hover {
     transform: scale(1.3); /* Efeito ao passar o mouse */
   }
   
