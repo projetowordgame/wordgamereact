@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Header.css"; // Importa o CSS
+import "./header.css"; // Importa o CSS
 
 const Header = () => {
   const [user, setUser] = useState(null);
