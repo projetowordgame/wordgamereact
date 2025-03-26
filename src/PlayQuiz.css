@@ -29,14 +29,14 @@
   .answer-card {
     padding: 15px;
     font-size: 24px;
-    background: #f0f0f0;
+    background: #0056b3;
     border-radius: 10px;
     cursor: pointer;
     transition: background 0.3s;
   }
   
   .answer-card:hover {
-    background: #ddd;
+    background: #007bff;
   }
   
   .correct {
