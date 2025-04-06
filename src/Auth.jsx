@@ -1,12 +1,20 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import  Header from "./components/header/header";
+import Header from "./components/header/header";
 import "./Auth.css";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate(); // 🔹 Hook para navegação
+  const navigate = useNavigate();
+
+  // 🔹 Impede acesso ao login se já estiver autenticado
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      navigate("/home"); // Redireciona para outra página
+    }
+  }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -19,7 +27,7 @@ const Auth = () => {
     const data = await response.json();
     if (data.access_token) {
       localStorage.setItem("token", data.access_token);
-      navigate("/dashboard"); // 🔹 Redireciona para o Dashboard
+      navigate("/free-activities"); // 🔹 Redireciona após login bem-sucedido
     } else {
       alert("Login falhou! Verifique suas credenciais.");
     }

@@ -19,7 +19,7 @@ const Register = () => {
 
     if (response.ok) {
       alert("Cadastro realizado com sucesso! Faça login.");
-      navigate("/"); // 🔹 Redireciona para a tela de login
+      navigate("/login"); // 🔹 Redireciona para a tela de login
     } else {
       alert("Erro ao cadastrar. Verifique os dados e tente novamente.");
     }

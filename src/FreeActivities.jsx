@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import  Header from "./components/header/header";
 import "./Dashboard.css";
 
-const Dashboard = () => {
+const FreeActivities = () => {
   const navigate = useNavigate();
 
   const games = [
@@ -12,7 +12,7 @@ const Dashboard = () => {
       name: "Jogo de Perguntas",
       description: "Crie quizzes interativos e teste seus conhecimentos.",
       image: "/images/perguntas.png",
-      route: "/create-quizz"
+      route: "/free-quizz"
     },
     {
       id: "forca",
@@ -52,7 +52,7 @@ const Dashboard = () => {
     <>
       <Header />
       <div className="dashboard-container">
-        <h2>Escolha um jogo para criar</h2>
+        <h2>Jogos Livres: Escolha um jogo!</h2>
         <div className="games-grid">
           {games.map((game) => (
             <div key={game.id} className="game-card" onClick={() => navigate(game.route)}>
@@ -67,5 +67,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
-
+export default FreeActivities;

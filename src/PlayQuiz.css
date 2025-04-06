@@ -67,4 +67,37 @@
   .button:hover {
     background: #0056b3;
   }
+
+
+  .ranking-table {
+    width: 100%;
+    max-width: 600px;
+    margin: 1rem auto;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .ranking-table th,
+  .ranking-table td {
+    padding: 12px 16px;
+    border: 1px solid #ddd;
+    text-align: center;
+  }
+  
+  .ranking-table th {
+    background-color: #333;
+    color: white;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+  }
+  
+  .ranking-table tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .ranking-table tbody tr:hover {
+    background-color: #e0e0e0;
+  }
   

@@ -66,7 +66,7 @@ const Profile = () => {
     if (response.ok) {
       alert("Conta deletada com sucesso!");
       localStorage.removeItem("token"); // Remove o token após deletar
-      navigate("/"); // Redireciona para a página inicial
+      navigate("/login"); // Redireciona para a página inicial
     } else {
       alert("Erro ao deletar conta!");
     }
