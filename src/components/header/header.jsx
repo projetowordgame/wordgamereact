@@ -13,11 +13,23 @@ const Header = () => {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       })
-        .then((response) => response.json())
-        .then((data) => {
-          setUser(data); // Armazena os dados do usuário (incluindo o tipo)
+        .then((response) => {
+          if (!response.ok) {
+            if (response.status === 401) {
+              // Token expirado ou inválido
+              handleLogout(); // Remove token e redireciona
+            }
+            throw new Error("Falha na autenticação");
+          }
+          return response.json();
         })
-        .catch(() => setUser(null));
+        .then((data) => {
+          setUser(data);
+        })
+        .catch((err) => {
+          console.error("Erro ao buscar perfil:", err);
+          setUser(null);
+        });
     }
   }, []);
 
@@ -33,14 +45,15 @@ const Header = () => {
       <nav>
         {user ? (
           <div className="nav-links">
-            <button onClick={() => navigate("/student-activities")}>Atividades de Professores</button>
-            <button onClick={() => navigate("/free-activities")}>Atividades Livres</button>
+            <button onClick={() => navigate("/student-activities")}>Jogos de Professores</button>
+            <button onClick={() => navigate("/free-activities")}>Jogos Livres</button>
 
             {/* Exibe apenas se for professor */}
             {user.role === "professor" && (
               <>
-                <button onClick={() => navigate("/my-activities")}>Minhas Atividades</button>
-                <button onClick={() => navigate("/dashboard")}>Criar Atividade</button>
+                <button onClick={() => navigate("/my-activities")}>Meus Jogos</button>
+                <button onClick={() => navigate("/dashboard")}>Criar Jogo</button>
+                <button onClick={() => navigate("/control-panel")}>Painel de Controle</button>
               </>
             )}
 

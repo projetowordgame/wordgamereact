@@ -1,0 +1,139 @@
+.dashboard-container-panel {
+    display: flex;
+    margin: 80px auto 20px;
+    flex-direction: row; /* garante layout em linha */
+    height: calc(100vh - 60px); /* considerando um header de ~60px */
+    font-family: Arial, sans-serif;
+  }
+  
+  .sidebar-panel {
+    width: 20%;
+    min-width: 200px;
+    background-color: #f0f0f0;
+    padding: 1rem;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+  
+  .sidebar-button-panel {
+    padding: 1rem;
+    background-color: white;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    text-align: left;
+  }
+  
+  .sidebar-button-panel:hover {
+    background-color: #e6e6e6;
+  }
+  
+  .sidebar-button-panel.active {
+    background-color: #ccc;
+  }
+  
+  .main-content-panel {
+    width: 80%;
+    padding: 2rem;
+    overflow-y: auto;
+  }
+  
+  .data-grid-panel {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+  }
+  
+  .data-grid-panel th,
+  .data-grid-panel td {
+    padding: 0.75rem;
+    border-bottom: 1px solid #ddd;
+    text-align: left;
+  }
+  
+  .data-grid-panel th {
+    background-color: #f9f9f9;
+    font-weight: bold;
+  }
+  
+
+  .quiz-list {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 20px;
+  }
+  
+  .quiz-list li {
+    margin-bottom: 8px;
+  }
+  
+  .quiz-list button {
+    padding: 8px 12px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  
+  .quiz-list button:hover {
+    background-color: #375bb3;
+  }
+  
+
+
+  .new-button-panel {
+    padding: 10px 16px;
+    margin-bottom: 16px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+  .new-button-panel:hover {
+    background-color: #0056b3;
+  }
+
+  .edit-button-panel {
+    padding: 8px 12px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  .edit-button-panel:hover {
+    background-color: #1e7e34;
+  }
+
+  .title-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .edit-form-panel {
+    margin-top: 20px;
+    padding: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+  }
+  
+  .edit-form-panel form label {
+    display: block;
+    margin-bottom: 8px;
+  }
+  
+  .edit-form-panel input {
+    width: 100%;
+    padding: 8px;
+    margin-top: 4px;
+    margin-bottom: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }

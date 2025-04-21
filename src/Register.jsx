@@ -54,7 +54,7 @@ const Register = () => {
           />
           <button type="submit">Registrar</button>
           <p>
-            Já tem uma conta? <span onClick={() => navigate("/")}>Faça login</span>
+            Já tem uma conta? <span onClick={() => navigate("/login")}>Faça login</span>
           </p>
         </form>
       </div>

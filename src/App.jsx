@@ -10,6 +10,7 @@ import StudentActivities from "./StudentActivities";
 import FreeActivities from "./FreeActivities";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import FreeQuizz from "./FreeQuizz";
+import ControlPanel from "./ControlPanel";
 
 function App() {
   return (
@@ -46,6 +47,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["professor"]}>
               <Dashboard /> {/* Tela criar atividades */}
+            </ProtectedRoute>
+          }
+        />
+        
+        <Route
+          path="/control-panel"
+          element={
+            <ProtectedRoute allowedRoles={["professor"]}>
+              <ControlPanel /> {/* Tela criar atividades */}
             </ProtectedRoute>
           }
         />

@@ -4,7 +4,10 @@ import Header from "./components/header/header";
 import "./Profile.css";
 
 const Profile = () => {
-  const [user, setUser] = useState({ id: "", name: "", email: "", password: "" });
+  const [user, setUser] = useState({ id: "", name: "", email: "" });
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPasswordFields, setShowPasswordFields] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -21,16 +24,30 @@ const Profile = () => {
       });
 
       const data = await response.json();
-      setUser({ id: data.id, name: data.name, email: data.email, password: "" });
+      setUser({ id: data.id, name: data.name, email: data.email });
     };
 
     fetchUserData();
   }, [navigate]);
 
-
   const handleUpdate = async (e) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
+
+    if (showPasswordFields && newPassword !== confirmPassword) {
+      alert("As senhas não coincidem!");
+      return;
+    }
+
+    const payload = {
+      id: user.id,
+      name: user.name,
+      email: user.email,
+    };
+
+    if (showPasswordFields && newPassword) {
+      payload.password = newPassword;
+    }
 
     const response = await fetch("http://localhost:3000/auth/update", {
       method: "PUT",
@@ -38,23 +55,25 @@ const Profile = () => {
         "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(user),
+      body: JSON.stringify(payload),
     });
 
     if (response.ok) {
       alert("Perfil atualizado com sucesso!");
+      setNewPassword("");
+      setConfirmPassword("");
+      setShowPasswordFields(false);
     } else {
       alert("Erro ao atualizar perfil!");
     }
   };
-
 
   const handleDelete = async () => {
     const confirmDelete = window.confirm(
       "Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita."
     );
 
-    if (!confirmDelete) return; // Se o usuário cancelar, não faz nada
+    if (!confirmDelete) return;
 
     const token = localStorage.getItem("token");
 
@@ -65,23 +84,19 @@ const Profile = () => {
 
     if (response.ok) {
       alert("Conta deletada com sucesso!");
-      localStorage.removeItem("token"); // Remove o token após deletar
-      navigate("/login"); // Redireciona para a página inicial
+      localStorage.removeItem("token");
+      navigate("/login");
     } else {
       alert("Erro ao deletar conta!");
     }
   };
-
-
-
-
 
   return (
     <>
       <Header />
       <div className="profile-container">
         <h2>Meu Perfil</h2>
-        <form onSubmit={handleUpdate}>
+        <form onSubmit={handleUpdate} autoComplete="off">
           <label>Nome:</label>
           <input
             type="text"
@@ -96,18 +111,54 @@ const Profile = () => {
             onChange={(e) => setUser({ ...user, email: e.target.value })}
           />
 
-          <label>Nova Senha:</label>
-          <input
-            type="password"
-            placeholder="Digite uma nova senha"
-            value={user.password}
-            onChange={(e) => setUser({ ...user, password: e.target.value })}
-          />
+          {!showPasswordFields ? (
+            <button
+              type="button"
+              className="change-password-btn-profile"
+              onClick={() => setShowPasswordFields(true)}
+            >
+              Trocar Senha
+            </button>
+          ) : (
+            <>
+              <label>Nova Senha:</label>
+              <input
+                autoComplete="new-password"
+                type="password"
+                value={newPassword}
+                onChange={(e) => setNewPassword(e.target.value)}
+              />
 
-          <button type="submit">Salvar Alterações</button>
-          <button type="button" onClick={handleDelete} className="delete-btn">
-            Deletar Conta
-        </button>
+              <label>Confirmar Senha:</label>
+              <input
+                autoComplete="new-password"
+                type="password"
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
+              />
+
+              <button
+                type="button"
+                className="change-password-btn-profile"
+                onClick={() => {
+                  setNewPassword("");
+                  setConfirmPassword("");
+                  setShowPasswordFields(false);
+                }}
+              >
+                Cancelar
+              </button>
+            </>
+          )}
+
+          <hr className="separator-line" />
+
+          <div className="buttons-section">
+            <button type="submit" className="action-btn-profile">Salvar Alterações</button>
+            <button type="button" onClick={handleDelete} className="delete-btn">
+              Deletar Conta
+            </button>
+          </div>
         </form>
       </div>
     </>

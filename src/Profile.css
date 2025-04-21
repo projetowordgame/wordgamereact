@@ -47,7 +47,7 @@
 /* Botão de salvar */
 .profile-container button {
     width: 100%;
-    background: #2575fc;
+    background-color: #28a745;
     color: white;
     padding: 12px;
     border: none;
@@ -58,7 +58,7 @@
 }
 
 .profile-container button:hover {
-    background: #1a5bcc;
+    background-color: #1e7e34;
 }
 
 /* Botão de deletar conta */
@@ -76,3 +76,35 @@
 .profile-container .delete-btn:hover {
     background: darkred;
 }
+
+.profile-container .change-password-btn-profile {
+    width: 20%;
+    background: #2575fc;
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    transition: background 0.3s;
+}
+
+.profile-container .change-password-btn-profile:hover {
+    background: #1a5bcc;
+}
+
+/* Linha de separação */
+.separator-line {
+    width: 100%;
+    margin: 30px 0 10px;
+    border: none;
+    border-top: 2px solid #ddd;
+  }
+  
+  /* Seção dos botões */
+  .buttons-section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+  }

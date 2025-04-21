@@ -62,7 +62,7 @@ const MyActivities = () => {
     <>
       <Header />
       <div className="my-activities-container">
-        <h2>Minhas Atividades</h2>
+        <h2>Meus Jogos</h2>
         <div className="quiz-list">
           {quizzes.length === 0 ? (
             <p>Você ainda não criou nenhum quiz.</p>

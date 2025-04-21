@@ -1,8 +1,8 @@
 .my-activities-container {
-    max-width: 800px;
-    margin: 80px auto 20px;
-    padding: 20px;
-    text-align: center;
+  max-width: 900px;
+  margin: 80px auto 20px;
+  padding: 20px;
+  text-align: center;
   }
   
   .my-activities-container h2 {
@@ -11,10 +11,11 @@
   }
   
   .quiz-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 20px;
-    justify-content: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: left;
+    gap: 15px;
+    margin-top: 20px;
   }
   
   
