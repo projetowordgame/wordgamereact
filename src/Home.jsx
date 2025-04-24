@@ -9,8 +9,7 @@ const Home = () => {
   const [user] = useState(null);
  
   return (
-    
-    
+        
     <div className="home-container">
       <Header user={user} />
       <main>
