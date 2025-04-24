@@ -11,11 +11,13 @@ import FreeActivities from "./FreeActivities";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import FreeQuizz from "./FreeQuizz";
 import ControlPanel from "./ControlPanel";
+import Home from "./Home";
 
 function App() {
   return (
     <Router>
       <Routes>
+        <Route path="/" element={<Home />} /> {/* Tela de Home */}
         <Route path="/login" element={<Auth />} /> {/* Tela de login/cadastro */}
         <Route path="/registrar" element={<Register />} /> {/* Tela de registro */}
         <Route path="/perfil" element={<Profile />} /> {/* Tela de Perfil */}
