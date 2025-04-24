@@ -41,12 +41,12 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1 className="logo" onClick={() => navigate("/home")}>WordGame</h1>
+      <h1 className="logo" onClick={() => navigate("/")}>Learn by Playing</h1>
       <nav>
         {user ? (
           <div className="nav-links">
-            <button onClick={() => navigate("/student-activities")}>Jogos de Professores</button>
-            <button onClick={() => navigate("/free-activities")}>Jogos Livres</button>
+            <button onClick={() => navigate("/student-activities")}>Área do Professor</button>
+            <button onClick={() => navigate("/free-activities")}>Área do Aluno</button>
 
             {/* Exibe apenas se for professor */}
             {user.role === "professor" && (

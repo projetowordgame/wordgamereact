@@ -1,0 +1,81 @@
+.home-container {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0;
+  margin: 0;      
+}
+
+.head {
+  align-items: center;
+  background: linear-gradient(135deg, rgb(74, 2, 113), #6c06e9);
+  color: rgb(16, 129, 236);
+  text-align: center;
+}
+
+main {
+  justify-content: center;
+  height: 200px;
+  padding: 50px 0 50px 0;
+}
+
+section {
+  padding: 0 200px 0 200px;
+}
+
+div {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  border-top: solid 1px #052fbb1d;
+  border-bottom: solid 1px #052fbb1d;
+}
+
+h1 {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+  color: rgb(170, 11, 255);
+  text-align: center;
+  padding: 50px 0 50px 0px;
+}
+
+h2 {
+  font-size: 42px;
+  color: rgb(170, 11, 255);
+  text-align: start;
+  padding: 0 0 0 20px;
+}
+
+h3 {
+  font-size: 42px;
+  color: rgb(170, 11, 255);
+  text-align: start;
+  padding: 0 0 0 20px;
+}
+
+p {
+  font-size: 20px;
+  color: rgb(91, 6, 227);
+  text-align: start;
+  padding: 0 0 0 20px;
+
+}
+
+li {
+  font-size: 20px;
+  color: rgb(91, 6, 227);
+  text-align: start;
+  padding: 0 0 0 20px;
+}
+span {
+  font-size:100px;
+}
+
+span#montain {
+  font-size: 120px;
+  margin-right: 1rem;
+  margin-top: 100px;
+}
+
+footer {
+  text-align: center;
+  background-color: #043b8f;
+}
