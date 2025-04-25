@@ -8,13 +8,13 @@ body, html {
 
 /* Faz com que o container ocupe toda a tela */
 .auth-container {
+  background-image: url("/background.jpg");
+  background-size: cover;
+  background-position: center;
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: calc(100vh - 60px); /* 100% da tela menos o header */
-  background: linear-gradient(to right, #6a11cb, #2575fc);
-  margin-top: 60px; /* Mesmo valor do height do Header */
 }
 
 /* Escopo para os elementos internos */
@@ -82,4 +82,13 @@ body, html {
 
 .auth-container p span:hover {
   text-decoration: underline;
+}
+
+
+.auth-logo {
+  display: block;
+  margin: 0 auto 1.5rem;
+  width: 200px;
+  height: 200px;
+  object-fit: contain;
 }

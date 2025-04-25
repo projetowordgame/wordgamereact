@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/header/header";
+import Swal from "sweetalert2";
 import "./Profile.css";
 
 const Profile = () => {
@@ -35,7 +36,15 @@ const Profile = () => {
     const token = localStorage.getItem("token");
 
     if (showPasswordFields && newPassword !== confirmPassword) {
-      alert("As senhas não coincidem!");
+      Swal.fire({
+        icon: "warning",
+        title: "Senhas diferentes",
+        text: "As senhas não coincidem!",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
       return;
     }
 
@@ -59,37 +68,80 @@ const Profile = () => {
     });
 
     if (response.ok) {
-      alert("Perfil atualizado com sucesso!");
+      Swal.fire({
+        icon: "success",
+        title: "Sucesso!",
+        text: "Perfil atualizado com sucesso!",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
       setNewPassword("");
       setConfirmPassword("");
       setShowPasswordFields(false);
     } else {
-      alert("Erro ao atualizar perfil!");
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: "Erro ao atualizar perfil!",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
     }
   };
 
-  const handleDelete = async () => {
-    const confirmDelete = window.confirm(
-      "Tem certeza que deseja excluir sua conta? Essa ação não pode ser desfeita."
-    );
-
-    if (!confirmDelete) return;
-
-    const token = localStorage.getItem("token");
-
-    const response = await fetch(`http://localhost:3000/auth/${user.id}`, {
-      method: "DELETE",
-      headers: { Authorization: `Bearer ${token}` },
-    });
-
-    if (response.ok) {
-      alert("Conta deletada com sucesso!");
-      localStorage.removeItem("token");
-      navigate("/login");
-    } else {
-      alert("Erro ao deletar conta!");
-    }
-  };
+    const handleDelete = async () => {
+      const result = await Swal.fire({
+        title: "Tem certeza?",
+        text: "Essa ação não pode ser desfeita. Sua conta será excluída.",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Sim, excluir",
+        confirmButtonColor: "#d33",
+        cancelButtonText: "Cancelar",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button',
+          cancelButton: 'swal-button'
+        }
+      });
+    
+      if (!result.isConfirmed) return;
+    
+      const token = localStorage.getItem("token");
+    
+      const response = await fetch(`http://localhost:3000/auth/${user.id}`, {
+        method: "DELETE",
+        headers: { Authorization: `Bearer ${token}` },
+      });
+    
+      if (response.ok) {
+        Swal.fire({
+          icon: "success",
+          title: "Conta excluída",
+          text: "Sua conta foi excluída com sucesso.",
+          customClass: {
+            popup: 'swal-wide',
+            confirmButton: 'swal-button'
+          }
+        });
+        localStorage.removeItem("token");
+        navigate("/login");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Erro",
+          text: "Erro ao deletar conta!",
+          customClass: {
+            popup: 'swal-wide',
+            confirmButton: 'swal-button'
+          }
+        });
+      }
+    };
 
   return (
     <>

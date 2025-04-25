@@ -75,7 +75,13 @@
     transform: scale(1.2);
   }
   
-
-
+  .swal-wide {
+    width: 400px !important;
+  }
+  
+  .swal-button {
+    font-size: 1rem;
+    padding: 10px 20px;
+  }
 
   

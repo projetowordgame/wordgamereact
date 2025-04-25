@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Sidebar from "./components/control-painel/Sidebar";
 import DataGrid from "./components/control-painel/DataGrid";
+import Swal from "sweetalert2";
 import "./ControlPanel.css";
 import Header from "./components/header/header";
 
@@ -98,7 +99,15 @@ const ControlPanel = () => {
 
     if (isCreatingNew) {
       if (!payload.password) {
-        alert("Informe uma senha para o novo usuário.");
+        Swal.fire({
+          icon: "warning",
+          title: "Senha necessária",
+          text: "Informe uma senha para o novo usuário.",
+          customClass: {
+            popup: 'swal-wide',
+            confirmButton: 'swal-button'
+          }
+        });
         return;
       }
 
@@ -123,7 +132,15 @@ const ControlPanel = () => {
       if (!response.ok) {
         const err = await response.json();
         console.error("Erro ao salvar:", err);
-        alert("Erro ao salvar.");
+        Swal.fire({
+          icon: "error",
+          title: "Erro ao salvar",
+          text: err.message || "Ocorreu um erro ao tentar salvar o usuário.",
+          customClass: {
+            popup: 'swal-wide',
+            confirmButton: 'swal-button'
+          }
+        });
         return;
       }
 
@@ -134,9 +151,29 @@ const ControlPanel = () => {
       setConfirmPassword("");
       setIsCreatingNew(false);
       setUserRole("");
+      if (isCreatingNew) {
+        Swal.fire({
+          icon: "success",
+          title: "Cadastro realizado com sucesso!",
+          text: `O ${userRole === "professor" ? "professor" : "aluno"} foi cadastrado.`,
+          customClass: {
+            popup: 'swal-wide',
+            confirmButton: 'swal-button'
+          }
+        });
+      }
+      
     } catch (err) {
       console.error("Erro de rede:", err);
-      alert("Erro ao conectar.");
+      Swal.fire({
+        icon: "error",
+        title: "Erro de conexão",
+        text: "Não foi possível conectar ao servidor.",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
     }
   };
 
