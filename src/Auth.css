@@ -57,6 +57,20 @@ body, html {
   transition: background 0.3s;
 }
 
+#btnRegistrar {
+  width: 50%;
+  align-self: center;
+  background: #6a11cb;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+
+#btnRegistrar:hover {
+  background: #45058f;
+}
+
 .auth-container button:hover {
   background: #1a5ed8;
 }
@@ -75,6 +89,8 @@ body, html {
 }
 
 .auth-container p span {
+  font-size: 20px;
+  text-align: center;
   color: #2575fc;
   cursor: pointer;
   font-weight: bold;
@@ -82,4 +98,10 @@ body, html {
 
 .auth-container p span:hover {
   text-decoration: underline;
+}
+
+#reset {
+  text-align: center;
+  font-size: 12px;
+  color: #555;
 }

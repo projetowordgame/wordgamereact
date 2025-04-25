@@ -1,4 +1,6 @@
 .home-container {
+  background: linear-gradient(135deg, #6e8efb, #a777e3);
+
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -24,8 +26,8 @@ section {
   padding: 0 200px 0 200px;
 }
 
+
 div {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
   border-top: solid 1px #052fbb1d;
   border-bottom: solid 1px #052fbb1d;
 }

@@ -52,9 +52,13 @@ const Auth = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Entrar</button>
-          <p>
+        {/* <p>
             Ainda não tem uma conta? <span onClick={() => navigate("/registrar")}>Criar uma conta</span>
-          </p>
+          </p> */}
+          <p id="reset">Esqueceu sua senha?</p>
+          <button id="btnRegistrar" type="button" onClick={() => navigate("/registrar")}>
+            Criar uma conta
+          </button>    
         </form>
       </div>
     </>
