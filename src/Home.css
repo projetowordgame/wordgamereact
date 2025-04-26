@@ -1,6 +1,6 @@
 .home-container {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-
+  background: url('/images/fundoKidsGame.jpeg') no-repeat center;
+  background-size: cover;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -10,7 +10,7 @@
 }
 
 .head {
-  align-items: center;
+  font-size: 42px;
   background: linear-gradient(135deg, rgb(74, 2, 113), #6c06e9);
   color: rgb(16, 129, 236);
   text-align: center;
@@ -19,7 +19,7 @@
 main {
   justify-content: center;
   height: 200px;
-  padding: 50px 0 50px 0;
+  padding: 50px 0 65px 0;
 }
 
 section {
@@ -37,13 +37,6 @@ h1 {
   color: rgb(170, 11, 255);
   text-align: center;
   padding: 50px 0 50px 0px;
-}
-
-h2 {
-  font-size: 42px;
-  color: rgb(170, 11, 255);
-  text-align: start;
-  padding: 0 0 0 20px;
 }
 
 h3 {
@@ -74,7 +67,7 @@ span {
 span#montain {
   font-size: 120px;
   margin-right: 1rem;
-  margin-top: 100px;
+  margin-top: 100px;;
 }
 
 footer {
