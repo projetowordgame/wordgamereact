@@ -4,54 +4,59 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  align-items: center;
+  gap: 10px;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  padding: 0;
-  margin: 0;      
+  color: rgb(170, 11, 255);
+  text-align: center;
+  padding: 80px 10px 10px 10px;
+}
+
+.container-logo {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  background-color: rgb(91, 6, 227);
+  height: 200px;
+  padding: 0 22px;
+  flex-wrap: wrap;
+  text-align: center;
+}
+
+.container-logo img {
+  width: 175px;
+  height: 175px;
+  object-fit: cover;
 }
 
 .head {
   font-size: 42px;
-  background: linear-gradient(135deg, rgb(74, 2, 113), #6c06e9);
-  color: rgb(16, 129, 236);
+  color: rgb(144, 190, 233);
   text-align: center;
-}
-
-main {
-  justify-content: center;
-  height: 200px;
-  padding: 50px 0 65px 0;
 }
 
 section {
-  padding: 0 200px 0 200px;
+  width: 100%;
 }
 
-
-div {
-  border-top: solid 1px #052fbb1d;
-  border-bottom: solid 1px #052fbb1d;
-}
-
-h1 {
-  background: linear-gradient(135deg, #6e8efb, #a777e3);
-  color: rgb(170, 11, 255);
-  text-align: center;
-  padding: 50px 0 50px 0px;
+section > div {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 20px;
+  box-sizing: border-box;
 }
 
 h3 {
   font-size: 42px;
   color: rgb(170, 11, 255);
-  text-align: start;
-  padding: 0 0 0 20px;
+  text-align: center;
 }
 
 p {
   font-size: 20px;
   color: rgb(91, 6, 227);
   text-align: start;
-  padding: 0 0 0 20px;
-
 }
 
 li {
@@ -60,17 +65,53 @@ li {
   text-align: start;
   padding: 0 0 0 20px;
 }
+
 span {
-  font-size:100px;
+  font-size: 100px;
+  margin-right: 33px;
 }
 
 span#montain {
   font-size: 120px;
-  margin-right: 1rem;
-  margin-top: 100px;;
 }
 
 footer {
   text-align: center;
-  background-color: #043b8f;
+  color: #12006d;
+  padding: 20px;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+  .head {
+    font-size: 28px;
+  }
+
+  .container-logo img {
+    width: 120px;
+    height: 120px;
+  }
+
+  span {
+    font-size: 60px;
+    margin-right: 0;
+  }
+
+  section > div {
+    padding: 10px;
+  }
+
+
+  h3 {
+    font-size: 30px;
+  }
+
+  p, li {
+    font-size: 18px;
+  }
+
+  .container-logo {
+    height: auto;
+    padding: 20px 10px;
+  }
 }
