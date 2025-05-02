@@ -52,6 +52,7 @@ const FreeActivities = () => {
     <>
       <Header />
       <div className="dashboard-container">
+        <img src="/images/logoKidsGames.jpeg" alt="Logo" />
         <h2>Jogos Livres: Escolha um jogo!</h2>
         <div className="games-grid">
           {games.map((game) => (
