@@ -12,7 +12,7 @@ const Auth = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/home"); // Redireciona para outra página
+      navigate("/"); // Redireciona para outra página
     }
   }, [navigate]);
 
@@ -39,10 +39,10 @@ const Auth = () => {
       <div className="auth-container">
         <form onSubmit={handleLogin}>
         <img
-  src="https://upload.wikimedia.org/wikipedia/commons/a/ab/Logo_TV_2015.png"
-  alt="Logo do Wordgame"
-  className="auth-logo"
-/>
+          src="/logo.png"
+          alt="Logo do Wordgame"
+          className="auth-logo"
+        />
         <h2>Faça seu login</h2>
           <input
             type="email"

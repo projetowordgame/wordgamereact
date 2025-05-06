@@ -13,16 +13,8 @@ const Dashboard = () => {
       description: "Crie quizzes interativos e teste seus conhecimentos.",
       image: "/images/perguntas.png",
       route: "/create-quizz"
-    },
-    {
-      id: "forca",
-      name: "Jogo da Forca",
-      description: "Crie desafios de forca e veja se seus amigos acertam as palavras.",
-      image: "/images/forca.png",
-      route: "/criar-forca"
     }
   ];
-
 
 
   useEffect(() => {

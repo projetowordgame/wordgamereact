@@ -87,8 +87,8 @@ body, html {
 
 .auth-logo {
   display: block;
-  margin: 0 auto 1.5rem;
-  width: 200px;
-  height: 200px;
+  margin: auto;
+  width: 260px;
+  height: 260px;
   object-fit: contain;
 }

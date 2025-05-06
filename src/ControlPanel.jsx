@@ -275,7 +275,7 @@ const ControlPanel = () => {
                 </label>
 
                 {!isCreatingNew && !showPasswordFields && (
-                  <button type="button" onClick={() => setShowPasswordFields(true)}>
+                  <button className="button-panel-trocar" type="button" onClick={() => setShowPasswordFields(true)}>
                     Trocar senha
                   </button>
                 )}
@@ -304,8 +304,9 @@ const ControlPanel = () => {
                 )}
 
                 <div style={{ marginTop: "1rem" }}>
-                  <button type="submit">Salvar</button>
+                  <button className="button-panel-salvar" type="submit">Salvar</button>
                   <button
+                    className="button-panel-cancelar"
                     type="button"
                     style={{ marginLeft: "1rem" }}
                     onClick={() => setEditUser(null)}

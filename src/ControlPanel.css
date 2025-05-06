@@ -137,3 +137,26 @@
     border: 1px solid #ccc;
     border-radius: 4px;
   }
+
+  .button-panel-trocar {
+    background-color: #007bff;
+    color: white;
+  }
+
+  .button-panel-trocar:hover {
+    background-color: #0056b3;
+  }
+
+.button-panel-salvar {
+  background-color: #28a745;
+  color: white;
+}
+
+.button-panel-salvar:hover {
+  background-color: #1e7e34;
+}
+
+.button-panel-cancelar {
+  background-color: red;
+  color: white;
+}

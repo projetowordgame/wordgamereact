@@ -1,0 +1,117 @@
+.home-container {
+    background: url('/background.jpg') no-repeat center;
+    background-size: cover;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: rgb(170, 11, 255);
+    text-align: center;
+    padding: 80px 10px 10px 10px;
+  }
+  
+  .container-logo-home {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 16px;
+    background-color: rgb(91, 6, 227);
+    height: 200px;
+    padding: 0 22px;
+    flex-wrap: wrap;
+    text-align: center;
+  }
+  
+  .container-logo-home img {
+    width: 175px;
+    height: 175px;
+    object-fit: cover;
+  }
+  
+  .head-home {
+    font-size: 42px;
+    color: rgb(144, 190, 233);
+    text-align: center;
+  }
+  
+  .section-home {
+    width: 100%;
+  }
+  
+  .section-home > div {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+ .h3-home {
+    font-size: 42px;
+    color: rgb(170, 11, 255);
+    text-align: center;
+  }
+  
+  .p-home {
+    font-size: 20px;
+    color: rgb(91, 6, 227);
+    text-align: start;
+  }
+  
+  .li-home {
+    font-size: 20px;
+    color: rgb(91, 6, 227);
+    text-align: start;
+    padding: 0 0 0 20px;
+  }
+  
+  .span-home {
+    font-size: 100px;
+    margin-right: 33px;
+  }
+  
+  .span-home#montain {
+    font-size: 120px;
+  }
+  
+  .footer-home {
+    text-align: center;
+    color: #12006d;
+    padding: 20px;
+  }
+  
+  /* Responsividade */
+  @media (max-width: 768px) {
+    .head-home {
+      font-size: 28px;
+    }
+  
+    .container-logo img {
+      width: 120px;
+      height: 120px;
+    }
+  
+    .span-home {
+      font-size: 60px;
+      margin-right: 0;
+    }
+  
+    .section-home > div {
+      padding: 10px;
+    }
+  
+  
+    .h3-home {
+      font-size: 30px;
+    }
+  
+    .p-home, .li-home {
+      font-size: 18px;
+    }
+  
+    .container-logo {
+      height: auto;
+      padding: 20px 10px;
+    }
+  }

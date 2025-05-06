@@ -218,20 +218,22 @@ const CreateQuizz = () => {
               ))}
 
               {q.answers.length < 4 && (
-                <button type="button" onClick={() => addAnswer(qIndex)}>
+                <button className="button-pergunta" type="button" onClick={() => addAnswer(qIndex)}>
                   + Adicionar Resposta
                 </button>
               )}
             </div>
           ))}
 
-          {questions.length < 10 && (
-            <button type="button" onClick={addQuestion}>
-              + Adicionar Pergunta
-            </button>
-          )}
+          <div className="button-row">
+            {questions.length < 10 && (
+              <button className="button-pergunta" type="button" onClick={addQuestion}>
+                + Adicionar Pergunta
+              </button>
+            )}
 
-          <button type="submit">Criar Quiz</button>
+            <button className="button-create" type="submit">Criar Quiz</button>
+          </div>
         </form>
       </div>
     </>

@@ -14,6 +14,7 @@ const PlayQuiz = () => {
   const [ranking, setRanking] = useState([]);
   const [startTime, setStartTime] = useState(null);
   const [quizDuration, setQuizDuration] = useState(0); // em segundos
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -34,11 +35,22 @@ const PlayQuiz = () => {
   const saveScore = async (correctAnswers, durationInSeconds) => {
     const token = localStorage.getItem("token");
 
+    if (!token) {
+      setIsLoggedIn(false); // não logado
+      return;
+    }
+
     const profileResponse = await fetch("http://localhost:3000/auth/profile", {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    if (!profileResponse.ok) {
+      setIsLoggedIn(false);
+      return;
+    }
+
     const user = await profileResponse.json();
+    setIsLoggedIn(true); // logado
 
     // Envia score e tempo para o backend
     await fetch(`http://localhost:3000/quizzes/ranking/${id}`, {
@@ -129,11 +141,16 @@ const PlayQuiz = () => {
             <p>✅ Respostas Corretas: {score.correct}</p>
             <p>❌ Respostas Erradas: {score.wrong}</p>
             <p>⏱️ Tempo Total: {formatTime(quizDuration)}</p>
-            <button onClick={restartGame}>🔄 Jogar Novamente</button>
+            <button className="button-again" onClick={restartGame}>🔄 Jogar Novamente</button>
 
             {/* 🏆 Ranking */}
             <div className="ranking">
               <h3>🏆 Ranking</h3>
+              {!isLoggedIn && (
+                <p style={{ color: "#b00", fontWeight: "bold" }}>
+                  🔐 Faça login para participar do ranking!
+                </p>
+              )}
               {ranking.length === 0 ? (
                 <p>Nenhum jogador ainda.</p>
               ) : (
