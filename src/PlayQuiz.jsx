@@ -169,9 +169,9 @@ const PlayQuiz = () => {
                     {ranking.map((entry, index) => (
                       <tr key={index}>
                         <td>{index + 1}º</td>
-                        <td>{entry.userName}</td>
-                        <td>{entry.correctAnswers}</td>
-                        <td>{formatTime(entry.timeInSeconds)}</td>
+                        <td>{entry.username}</td>
+                        <td>{entry.correctanswers}</td>
+                        <td>{formatTime(entry.timeinseconds)}</td>
                       </tr>
                     ))}
                   </tbody>

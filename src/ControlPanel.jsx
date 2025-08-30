@@ -224,15 +224,15 @@ const ControlPanel = () => {
                         header: "Posição",
                         render: (_, idx) => `${idx + 1}º`, // Posição no ranking
                       },
-                      { header: "Usuário", key: "userName" }, // Nome do usuário
-                      { header: "Acertos", key: "correctAnswers" }, // Número de acertos
+                      { header: "Usuário", key: "username" }, // Nome do usuário
+                      { header: "Acertos", key: "correctanswers" }, // Número de acertos
                       {
                         header: "Tempo",
-                        key: "timeInSeconds",
+                        key: "timeinseconds",
                         render: (item) => {
                           // Formatação de tempo (minutos e segundos)
-                          const mins = Math.floor(item.timeInSeconds / 60);
-                          const secs = item.timeInSeconds % 60;
+                          const mins = Math.floor(item.timeinseconds / 60);
+                          const secs = item.timeinseconds % 60;
                           return `${mins}m ${secs < 10 ? "0" : ""}${secs}s`;
                         },
                       },
