@@ -18,7 +18,7 @@ const MyActivities = () => {
       }
 
       // Obtém o usuário logado
-      const userResponse = await fetch("http://localhost:3000/auth/profile", {
+      const userResponse = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -27,7 +27,7 @@ const MyActivities = () => {
       const userId = userData.id;
 
       // Obtém os quizzes do usuário
-      const quizResponse = await fetch(`http://localhost:3000/quizzes/user/${userId}`, {
+      const quizResponse = await fetch(`${API_URL}/quizzes/user/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -61,7 +61,7 @@ const MyActivities = () => {
   
     const token = localStorage.getItem("token");
   
-    const response = await fetch(`http://localhost:3000/quizzes/${quizId}`, {
+    const response = await fetch(`${API_URL}/quizzes/${quizId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });

@@ -11,7 +11,7 @@ const StudentActivities = () => {
 
   useEffect(() => {
     const fetchTeachers = async () => {
-      const response = await fetch("http://localhost:3000/auth/teachers");
+      const response = await fetch(`${API_URL}/auth/teachers`);
       const data = await response.json();
       setTeachers(data);
     };
@@ -24,7 +24,7 @@ const StudentActivities = () => {
     setSelectedTeacher(teacherId);
     
     if (teacherId) {
-      const response = await fetch(`http://localhost:3000/quizzes/user/${teacherId}`);
+      const response = await fetch(`${API_URL}/quizzes/user/${teacherId}`);
       const data = await response.json();
       setQuizzes(data);
     } else {

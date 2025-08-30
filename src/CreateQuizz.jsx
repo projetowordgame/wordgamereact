@@ -19,7 +19,7 @@ const CreateQuizz = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/auth/profile", {
+      const response = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -132,7 +132,7 @@ const CreateQuizz = () => {
       return;
     }
   
-    const response = await fetch("http://localhost:3000/quizzes", {
+    const response = await fetch(`${API_URL}/quizzes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

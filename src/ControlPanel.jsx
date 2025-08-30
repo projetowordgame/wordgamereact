@@ -22,7 +22,7 @@ const ControlPanel = () => {
 
   const fetchRanking = async (quizId) => {
     try {
-      const response = await fetch(`http://localhost:3000/quizzes/ranking/${quizId}`);
+      const response = await fetch(`${API_URL}/quizzes/ranking/${quizId}`);
       const data = await response.json();
       setRanking(data);
     } catch (error) {
@@ -34,7 +34,7 @@ const ControlPanel = () => {
     const token = localStorage.getItem("token");
 
     try {
-      const userResponse = await fetch("http://localhost:3000/auth/profile", {
+      const userResponse = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -43,9 +43,9 @@ const ControlPanel = () => {
       const userId = userData.id;
 
       const [profResp, alunosResp, quizzesResp] = await Promise.all([
-        fetch("http://localhost:3000/auth/teachers"),
-        fetch("http://localhost:3000/auth/students"),
-        fetch(`http://localhost:3000/quizzes/user/${userId}`),
+        fetch(`${API_URL}/auth/teachers`),
+        fetch(`${API_URL}/auth/students`),
+        fetch(`${API_URL}/quizzes/user/${userId}`),
       ]);
 
       const profData = await profResp.json();
@@ -112,11 +112,11 @@ const ControlPanel = () => {
       }
 
       payload.role = userRole;
-      url = "http://localhost:3000/auth/register";
+      url = `${API_URL}/auth/register`;
       method = "POST";
     } else {
       payload.id = editUser.id;
-      url = "http://localhost:3000/auth/update";
+      url = `${API_URL}/auth/update`;
       method = "PUT";
     }
 

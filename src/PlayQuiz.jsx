@@ -23,7 +23,7 @@ const PlayQuiz = () => {
 
   useEffect(() => {
     const fetchQuiz = async () => {
-      const response = await fetch(`http://localhost:3000/quizzes/${id}`);
+      const response = await fetch(`${API_URL}/quizzes/${id}`);
       const data = await response.json();
       setQuiz(data);
       setStartTime(Date.now()); // Inicia contagem do tempo
@@ -40,7 +40,7 @@ const PlayQuiz = () => {
       return;
     }
 
-    const profileResponse = await fetch("http://localhost:3000/auth/profile", {
+    const profileResponse = await fetch(`${API_URL}/auth/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -53,7 +53,7 @@ const PlayQuiz = () => {
     setIsLoggedIn(true); // logado
 
     // Envia score e tempo para o backend
-    await fetch(`http://localhost:3000/quizzes/ranking/${id}`, {
+    await fetch(`${API_URL}/quizzes/ranking/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -66,7 +66,7 @@ const PlayQuiz = () => {
     });
 
     // Busca ranking atualizado
-    const rankingResponse = await fetch(`http://localhost:3000/quizzes/ranking/${id}`);
+    const rankingResponse = await fetch(`${API_URL}/quizzes/ranking/${id}`);
     const rankingData = await rankingResponse.json();
     setRanking(rankingData);
   };

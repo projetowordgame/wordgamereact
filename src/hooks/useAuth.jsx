@@ -13,7 +13,7 @@ const useAuth = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/auth/profile", {
+        const response = await fetch(`${API_URL}/auth/profile`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });
