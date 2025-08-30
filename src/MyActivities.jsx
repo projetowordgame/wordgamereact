@@ -5,6 +5,8 @@ import { Trash2 } from "lucide-react"; // ✅ Ícone de lixeira
 import Swal from "sweetalert2";
 import "./MyActivities.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const MyActivities = () => {
   const [quizzes, setQuizzes] = useState([]);
   const navigate = useNavigate();

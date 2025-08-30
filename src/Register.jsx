@@ -4,6 +4,8 @@ import Header from "./components/header/header";
 import Swal from "sweetalert2";
 import "./Auth.css"; // Reutilizando o CSS da tela de login
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

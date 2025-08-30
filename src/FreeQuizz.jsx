@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "./components/header/header";
 import "./MyActivities.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const FreeQuizz = () => {
   const [quizzes, setQuizzes] = useState([]);
   const navigate = useNavigate();

@@ -4,6 +4,8 @@ import Header from "./components/header/header";
 import Swal from "sweetalert2";
 import "./Profile.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Profile = () => {
   const [user, setUser] = useState({ id: "", name: "", email: "" });
   const [newPassword, setNewPassword] = useState("");

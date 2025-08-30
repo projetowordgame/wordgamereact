@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import Header from "./components/header/header";
 import "./CreateQuizz.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const CreateQuizz = () => {
   const [user, setUser] = useState(null);
   const [title, setTitle] = useState("");

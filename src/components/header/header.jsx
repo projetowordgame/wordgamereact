@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./header.css"; // Importa o CSS
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Header = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();

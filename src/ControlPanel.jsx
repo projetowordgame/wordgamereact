@@ -5,6 +5,8 @@ import Swal from "sweetalert2";
 import "./ControlPanel.css";
 import Header from "./components/header/header";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const ControlPanel = () => {
   const [activeTab, setActiveTab] = useState("professores");
   const [professores, setProfessores] = useState([]);

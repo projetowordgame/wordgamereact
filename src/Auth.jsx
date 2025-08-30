@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "./components/header/header";
 import "./Auth.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

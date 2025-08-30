@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./PlayQuiz.css";
 import Header from "./components/header/header";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const PlayQuiz = () => {
   const { id } = useParams(); // ID do quiz na URL
   const navigate = useNavigate();

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import  Header from "./components/header/header";
 import "./Dashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const FreeActivities = () => {
   const navigate = useNavigate();
 
