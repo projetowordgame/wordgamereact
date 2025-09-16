@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const useAuth = () => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -13,7 +15,7 @@ const useAuth = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:3000/auth/profile", {
+        const response = await fetch(`${API_URL}/auth/profile`, {
           method: "GET",
           headers: { Authorization: `Bearer ${token}` },
         });

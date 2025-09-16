@@ -2,7 +2,10 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "./components/header/header";
 import { Trash2 } from "lucide-react"; // ✅ Ícone de lixeira
+import Swal from "sweetalert2";
 import "./MyActivities.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const MyActivities = () => {
   const [quizzes, setQuizzes] = useState([]);
@@ -17,7 +20,7 @@ const MyActivities = () => {
       }
 
       // Obtém o usuário logado
-      const userResponse = await fetch("http://localhost:3000/auth/profile", {
+      const userResponse = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -26,7 +29,7 @@ const MyActivities = () => {
       const userId = userData.id;
 
       // Obtém os quizzes do usuário
-      const quizResponse = await fetch(`http://localhost:3000/quizzes/user/${userId}`, {
+      const quizResponse = await fetch(`${API_URL}/quizzes/user/${userId}`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -40,21 +43,54 @@ const MyActivities = () => {
 
   // Função para deletar um quiz
   const deleteQuiz = async (quizId) => {
-    const confirmDelete = window.confirm("Tem certeza que deseja excluir este quiz?");
-    if (!confirmDelete) return;
-
+    const result = await Swal.fire({
+      title: "Tem certeza?",
+      text: "Você realmente quer excluir este quiz?",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
+      confirmButtonText: "Sim, excluir",
+      cancelButtonText: "Cancelar",
+      customClass: {
+        popup: 'swal-wide', // define uma largura maior
+        confirmButton: 'swal-button',
+        cancelButton: 'swal-button'
+      }
+    });
+  
+    if (!result.isConfirmed) return;
+  
     const token = localStorage.getItem("token");
-
-    const response = await fetch(`http://localhost:3000/quizzes/${quizId}`, {
+  
+    const response = await fetch(`${API_URL}/quizzes/${quizId}`, {
       method: "DELETE",
       headers: { Authorization: `Bearer ${token}` },
     });
-
+  
     if (response.ok) {
-      alert("Quiz excluído com sucesso!");
-      setQuizzes(quizzes.filter((quiz) => quiz.id !== quizId)); // Remove do estado
+      await Swal.fire({
+        title: "Excluído!",
+        text: "O quiz foi removido com sucesso.",
+        icon: "success",
+        confirmButtonText: "OK",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
+      setQuizzes(quizzes.filter((quiz) => quiz.id !== quizId));
     } else {
-      alert("Erro ao excluir quiz!");
+      await Swal.fire({
+        title: "Erro!",
+        text: "Houve um problema ao excluir o quiz.",
+        icon: "error",
+        confirmButtonText: "OK",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
     }
   };
 

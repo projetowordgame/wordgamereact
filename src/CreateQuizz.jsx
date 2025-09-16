@@ -1,8 +1,11 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Trash2 } from "lucide-react"; // ✅ Ícone de lixeira
+import Swal from "sweetalert2";
 import Header from "./components/header/header";
 import "./CreateQuizz.css";
+
+const API_URL = import.meta.env.VITE_API_URL;
 
 const CreateQuizz = () => {
   const [user, setUser] = useState(null);
@@ -18,7 +21,7 @@ const CreateQuizz = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/auth/profile", {
+      const response = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -35,7 +38,15 @@ const CreateQuizz = () => {
     if (questions.length < 10) {
       setQuestions([...questions, { text: "", answers: [{ text: "", isCorrect: false }] }]);
     } else {
-      alert("O quiz pode ter no máximo 10 perguntas.");
+      Swal.fire({
+        icon: "info",
+        title: "Limite atingido",
+        text: "O quiz pode ter no máximo 10 perguntas.",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
     }
   };
 
@@ -51,7 +62,15 @@ const CreateQuizz = () => {
       newQuestions[qIndex].answers.push({ text: "", isCorrect: false });
       setQuestions(newQuestions);
     } else {
-      alert("Cada pergunta pode ter no máximo 4 respostas.");
+      Swal.fire({
+        icon: "info",
+        title: "Limite de respostas",
+        text: "Cada pergunta pode ter no máximo 4 respostas.",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
     }
   };
 
@@ -90,16 +109,32 @@ const CreateQuizz = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
-      alert("Usuário não autenticado.");
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: "Usuário não autenticado.",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
       return;
     }
-
+  
     if (!title.trim() || questions.length === 0) {
-      alert("O quiz precisa de um título e pelo menos uma pergunta.");
+      Swal.fire({
+        icon: "warning",
+        title: "Campos obrigatórios",
+        text: "O quiz precisa de um título e pelo menos uma pergunta.",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
       return;
     }
-
-    const response = await fetch("http://localhost:3000/quizzes", {
+  
+    const response = await fetch(`${API_URL}/quizzes`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -110,12 +145,29 @@ const CreateQuizz = () => {
         questions,
       }),
     });
-
+  
     if (response.ok) {
-      alert("Quiz criado com sucesso!");
+      await Swal.fire({
+        icon: "success",
+        title: "Sucesso!",
+        text: "Quiz criado com sucesso!",
+        confirmButtonText: "Ir para o painel",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
       navigate("/dashboard");
     } else {
-      alert("Erro ao criar quiz.");
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: "Houve um erro ao criar o quiz.",
+        customClass: {
+          popup: 'swal-wide',
+          confirmButton: 'swal-button'
+        }
+      });
     }
   };
 
@@ -168,20 +220,22 @@ const CreateQuizz = () => {
               ))}
 
               {q.answers.length < 4 && (
-                <button type="button" onClick={() => addAnswer(qIndex)}>
+                <button className="button-pergunta" type="button" onClick={() => addAnswer(qIndex)}>
                   + Adicionar Resposta
                 </button>
               )}
             </div>
           ))}
 
-          {questions.length < 10 && (
-            <button type="button" onClick={addQuestion}>
-              + Adicionar Pergunta
-            </button>
-          )}
+          <div className="button-row">
+            {questions.length < 10 && (
+              <button className="button-pergunta" type="button" onClick={addQuestion}>
+                + Adicionar Pergunta
+              </button>
+            )}
 
-          <button type="submit">Criar Quiz</button>
+            <button className="button-create" type="submit">Criar Quiz</button>
+          </div>
         </form>
       </div>
     </>

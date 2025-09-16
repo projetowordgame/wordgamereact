@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "./components/header/header";
 import "./Auth.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -12,13 +14,13 @@ const Auth = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      navigate("/home"); // Redireciona para outra página
+      navigate("/"); // Redireciona para outra página
     }
   }, [navigate]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/auth/login", {
+    const response = await fetch(`${API_URL}/auth/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ email, password }),
@@ -38,6 +40,11 @@ const Auth = () => {
       <Header />
       <div className="auth-container">
         <form onSubmit={handleLogin}>
+        <img
+          src="/logo.png"
+          alt="Logo do Wordgame"
+          className="auth-logo"
+        />
         <h2>Faça seu login</h2>
           <input
             type="email"
@@ -52,13 +59,9 @@ const Auth = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <button type="submit">Entrar</button>
-        {/* <p>
+          <p>
             Ainda não tem uma conta? <span onClick={() => navigate("/registrar")}>Criar uma conta</span>
-          </p> */}
-          <p id="reset">Esqueceu sua senha?</p>
-          <button id="btnRegistrar" type="button" onClick={() => navigate("/registrar")}>
-            Criar uma conta
-          </button>    
+          </p>
         </form>
       </div>
     </>

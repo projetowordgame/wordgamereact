@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import Header from "./components/header/header";
 import "./MyActivities.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const FreeQuizz = () => {
   const [quizzes, setQuizzes] = useState([]);
   const navigate = useNavigate();
@@ -16,7 +18,7 @@ const FreeQuizz = () => {
       }
 
       // Obtém o usuário logado
-      const userResponse = await fetch("http://localhost:3000/auth/profile", {
+      const userResponse = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -25,7 +27,7 @@ const FreeQuizz = () => {
       const userId = userData.id;
 
       // Obtém os quizzes livres(usuario admin)
-      const quizResponse = await fetch(`http://localhost:3000/quizzes/freequizz`, {
+      const quizResponse = await fetch(`${API_URL}/quizzes/freequizz`, {
         method: "GET"
       });
 
