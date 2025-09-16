@@ -4,6 +4,8 @@ import Header from "./components/header/header";
 import Swal from "sweetalert2";
 import "./Profile.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Profile = () => {
   const [user, setUser] = useState({ id: "", name: "", email: "" });
   const [newPassword, setNewPassword] = useState("");
@@ -19,7 +21,7 @@ const Profile = () => {
         return;
       }
 
-      const response = await fetch("http://localhost:3000/auth/profile", {
+      const response = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -58,7 +60,7 @@ const Profile = () => {
       payload.password = newPassword;
     }
 
-    const response = await fetch("http://localhost:3000/auth/update", {
+    const response = await fetch(`${API_URL}/auth/update`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -113,7 +115,7 @@ const Profile = () => {
     
       const token = localStorage.getItem("token");
     
-      const response = await fetch(`http://localhost:3000/auth/${user.id}`, {
+      const response = await fetch(`${API_URL}/auth/${user.id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${token}` },
       });

@@ -4,6 +4,8 @@ import Header from "./components/header/header";
 import Swal from "sweetalert2";
 import "./Auth.css"; // Reutilizando o CSS da tela de login
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Register = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
@@ -13,7 +15,7 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const response = await fetch("http://localhost:3000/auth/register", {
+    const response = await fetch(`${API_URL}/auth/register`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name, email, password, role }),

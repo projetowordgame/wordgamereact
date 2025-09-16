@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import  Header from "./components/header/header";
 import "./Dashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const FreeActivities = () => {
   const navigate = useNavigate();
 
@@ -27,7 +29,7 @@ const FreeActivities = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:3000/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

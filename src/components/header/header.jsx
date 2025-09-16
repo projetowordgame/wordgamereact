@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./header.css"; // Importa o CSS
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Header = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const Header = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:3000/auth/profile", {
+      fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       })

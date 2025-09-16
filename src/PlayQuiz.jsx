@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./PlayQuiz.css";
 import Header from "./components/header/header";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const PlayQuiz = () => {
   const { id } = useParams(); // ID do quiz na URL
   const navigate = useNavigate();
@@ -23,7 +25,7 @@ const PlayQuiz = () => {
 
   useEffect(() => {
     const fetchQuiz = async () => {
-      const response = await fetch(`http://localhost:3000/quizzes/${id}`);
+      const response = await fetch(`${API_URL}/quizzes/${id}`);
       const data = await response.json();
       setQuiz(data);
       setStartTime(Date.now()); // Inicia contagem do tempo
@@ -40,7 +42,7 @@ const PlayQuiz = () => {
       return;
     }
 
-    const profileResponse = await fetch("http://localhost:3000/auth/profile", {
+    const profileResponse = await fetch(`${API_URL}/auth/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
@@ -53,7 +55,7 @@ const PlayQuiz = () => {
     setIsLoggedIn(true); // logado
 
     // Envia score e tempo para o backend
-    await fetch(`http://localhost:3000/quizzes/ranking/${id}`, {
+    await fetch(`${API_URL}/quizzes/ranking/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -66,7 +68,7 @@ const PlayQuiz = () => {
     });
 
     // Busca ranking atualizado
-    const rankingResponse = await fetch(`http://localhost:3000/quizzes/ranking/${id}`);
+    const rankingResponse = await fetch(`${API_URL}/quizzes/ranking/${id}`);
     const rankingData = await rankingResponse.json();
     setRanking(rankingData);
   };
@@ -167,9 +169,9 @@ const PlayQuiz = () => {
                     {ranking.map((entry, index) => (
                       <tr key={index}>
                         <td>{index + 1}º</td>
-                        <td>{entry.userName}</td>
-                        <td>{entry.correctAnswers}</td>
-                        <td>{formatTime(entry.timeInSeconds)}</td>
+                        <td>{entry.username}</td>
+                        <td>{entry.correctanswers}</td>
+                        <td>{formatTime(entry.timeinseconds)}</td>
                       </tr>
                     ))}
                   </tbody>
