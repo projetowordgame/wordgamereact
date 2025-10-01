@@ -28,7 +28,6 @@ const Home = () => {
 
         <section className="section-home">                
           <div>
-            <h2 className="h2-home">Sobre a plataforma</h2>
             <h3 className="h3-home">O que é o Kids Games?</h3>
             <p className="p-home">
               O Kids Games é uma plataforma de aprendizado interativa que transforma o ensino e aprendizado em uma experiência divertida e envolvente. 
@@ -37,7 +36,6 @@ const Home = () => {
           </div>
 
           <div>
-            <h2 className="h2-home">Funcionamento</h2>
             <h3 className="h3-home">Como funciona?</h3>
             <p className="p-home">
               Os professores podem criar atividades personalizadas ativando assim a criatividade e engajamento dos alunos, despertando o interesse dos alunos que têm uma experiência de aprendizado mais dinâmica e divertida, 
@@ -46,7 +44,6 @@ const Home = () => {
           </div>
 
           <div> 
-            <h2 className="h2-home">Principais recursos</h2>
             <h3 className="h3-home">Recursos principais</h3>
             <ul>
               <li className="li-home">Jogos educativos interativos</li>
@@ -58,7 +55,6 @@ const Home = () => {
           </div>
 
           <div>
-            <h2 className="h2-home">Benefícios</h2>
             <h3 className="h3-home">Benefícios do Kids Games</h3>
             <p className="p-home">
               Com o Kids Games, os alunos podem aprender de forma mais eficaz e interativa. 
@@ -67,7 +63,6 @@ const Home = () => {
           </div>
 
           <div>
-            <h2 className="h2-home">Público-alvo</h2>
             <h3 className="h3-home">Quem pode usar?</h3>
             <p className="p-home">
               O Kids Games é ideal para alunos de todas as idades, professores e educadores. 
@@ -76,7 +71,6 @@ const Home = () => {
           </div>
 
           <div>
-            <h2 className="h2-home">Primeiros passos</h2>
             <h3 className="h3-home">Como começar?</h3>
             <p className="p-home">
               Para começar a usar o Kids Games, basta se inscrever na nossa plataforma. 
@@ -87,7 +81,7 @@ const Home = () => {
         </section>      
 
         <footer className="footer-home" role="contentinfo">
-          2025 Kids Games. Todos os direitos reservados.
+          <p>© 2025 Kids Games. Todos os direitos reservados.</p>
         </footer>
       </div>
     </>
