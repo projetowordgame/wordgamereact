@@ -11,6 +11,7 @@
   top: 0;
   width: 100%;
   box-sizing: border-box; /* 🔹 Evita que o padding faça o elemento ultrapassar 100% */
+  z-index: 1000; /* 🔹 garante que fique acima de tudo */
 }
 
 .header .logo {

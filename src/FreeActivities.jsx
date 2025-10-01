@@ -15,7 +15,21 @@ const FreeActivities = () => {
       description: "Crie quizzes interativos e teste seus conhecimentos.",
       image: "/images/perguntas.png",
       route: "/free-quizz"
-    }
+    },
+    {
+      id: "sequencia",
+      name: "Jogo da Sequência",
+      description: "Ordene os itens na sequência correta",
+      image: "/images/sequencia.jpg",
+      route: "/free-sequence"
+    },
+    {
+      id: "forca",
+      name: "Jogo da Forca",
+      description: "Adivinhe a palavra antes de formar o corpo",
+      image: "/images/forca.png",
+      route: "/free-forca"
+    },
   ];
 
 
