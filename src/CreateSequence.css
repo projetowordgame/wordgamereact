@@ -1,0 +1,109 @@
+.create-sequence-container {
+  max-width: 650px;
+  margin: 80px auto 40px auto;
+  padding: 25px 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+}
+
+.create-sequence-container h2 {
+  text-align: center;
+  margin-bottom: 25px;
+  font-size: 1.8rem;
+  font-weight: bold;
+}
+
+.create-sequence-container label {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.create-sequence-container input,
+.create-sequence-container textarea {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 18px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  box-sizing: border-box;
+  font-size: 1rem;
+}
+
+.create-sequence-container textarea {
+  min-height: 100px;
+  resize: vertical;
+}
+
+.card-block {
+  margin-bottom: 20px;
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  background: #fafafa;
+  transition: box-shadow 0.2s;
+}
+
+.card-block:hover {
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+}
+
+.card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.card-header span {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.delete-icon-quizz {
+  color: red;
+  cursor: pointer;
+  transition: transform 0.2s;
+  width: 26px;
+  height: 26px;
+}
+
+.delete-icon-quizz:hover {
+  transform: scale(1.3);
+}
+
+.button-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 25px;
+}
+
+.button-create {
+  padding: 12px 24px;
+  font-weight: bold;
+  border-radius: 6px;
+  background: #007bff;
+  color: white;
+  border: none;
+  transition: background 0.2s;
+}
+
+.button-create:hover {
+  background: #0056b3;
+}
+
+.button-pergunta {
+  padding: 12px 24px;
+  font-weight: bold;
+  border-radius: 6px;
+  background-color: #28a745;
+  color: white;
+  border: none;
+  transition: background 0.2s;
+}
+
+.button-pergunta:hover {
+  background-color: #1e7e34;
+}

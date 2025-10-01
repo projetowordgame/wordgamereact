@@ -13,8 +13,10 @@ const ControlPanel = () => {
   const [alunos, setAlunos] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quizzes, setQuizzes] = useState([]);
+  const [sequenceGames, setSequenceGames] = useState([]);
   const [ranking, setRanking] = useState([]);
-  const [selectedQuizId, setSelectedQuizId] = useState("");
+  const [selectedGameType, setSelectedGameType] = useState("");
+  const [selectedGameId, setSelectedGameId] = useState("");
   const [editUser, setEditUser] = useState(null);
   const [showPasswordFields, setShowPasswordFields] = useState(false);
   const [newPassword, setNewPassword] = useState("");
@@ -22,9 +24,13 @@ const ControlPanel = () => {
   const [isCreatingNew, setIsCreatingNew] = useState(false);
   const [userRole, setUserRole] = useState("");
 
-  const fetchRanking = async (quizId) => {
+  const fetchRanking = async (type, id) => {
     try {
-      const response = await fetch(`${API_URL}/quizzes/ranking/${quizId}`);
+      const endpoint =
+        type === "quiz"
+          ? `${API_URL}/quizzes/ranking/${id}`
+          : `${API_URL}/sequence-games/ranking/${id}`;
+      const response = await fetch(endpoint);
       const data = await response.json();
       setRanking(data);
     } catch (error) {
@@ -34,29 +40,31 @@ const ControlPanel = () => {
 
   const fetchData = async () => {
     const token = localStorage.getItem("token");
-
     try {
       const userResponse = await fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       });
-
       const userData = await userResponse.json();
       const userId = userData.id;
 
-      const [profResp, alunosResp, quizzesResp] = await Promise.all([
-        fetch(`${API_URL}/auth/teachers`),
-        fetch(`${API_URL}/auth/students`),
-        fetch(`${API_URL}/quizzes/user/${userId}`),
-      ]);
+      const [profResp, alunosResp, quizzesResp, sequenceResp] =
+        await Promise.all([
+          fetch(`${API_URL}/auth/teachers`),
+          fetch(`${API_URL}/auth/students`),
+          fetch(`${API_URL}/quizzes/user/${userId}`),
+          fetch(`${API_URL}/sequence-games/user/${userId}`),
+        ]);
 
       const profData = await profResp.json();
       const alunosData = await alunosResp.json();
       const quizzesData = await quizzesResp.json();
+      const sequenceData = await sequenceResp.json();
 
       setProfessores(profData);
       setAlunos(alunosData);
-      setQuizzes(quizzesData);
+      setQuizzes(Array.isArray(quizzesData) ? quizzesData : []);
+      setSequenceGames(Array.isArray(sequenceData) ? sequenceData : []);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
     } finally {
@@ -106,9 +114,9 @@ const ControlPanel = () => {
           title: "Senha necessária",
           text: "Informe uma senha para o novo usuário.",
           customClass: {
-            popup: 'swal-wide',
-            confirmButton: 'swal-button'
-          }
+            popup: "swal-wide",
+            confirmButton: "swal-button",
+          },
         });
         return;
       }
@@ -133,15 +141,14 @@ const ControlPanel = () => {
 
       if (!response.ok) {
         const err = await response.json();
-        console.error("Erro ao salvar:", err);
         Swal.fire({
           icon: "error",
           title: "Erro ao salvar",
           text: err.message || "Ocorreu um erro ao tentar salvar o usuário.",
           customClass: {
-            popup: 'swal-wide',
-            confirmButton: 'swal-button'
-          }
+            popup: "swal-wide",
+            confirmButton: "swal-button",
+          },
         });
         return;
       }
@@ -157,24 +164,24 @@ const ControlPanel = () => {
         Swal.fire({
           icon: "success",
           title: "Cadastro realizado com sucesso!",
-          text: `O ${userRole === "professor" ? "professor" : "aluno"} foi cadastrado.`,
+          text: `O ${
+            userRole === "professor" ? "professor" : "aluno"
+          } foi cadastrado.`,
           customClass: {
-            popup: 'swal-wide',
-            confirmButton: 'swal-button'
-          }
+            popup: "swal-wide",
+            confirmButton: "swal-button",
+          },
         });
       }
-      
     } catch (err) {
-      console.error("Erro de rede:", err);
       Swal.fire({
         icon: "error",
         title: "Erro de conexão",
         text: "Não foi possível conectar ao servidor.",
         customClass: {
-          popup: 'swal-wide',
-          confirmButton: 'swal-button'
-        }
+          popup: "swal-wide",
+          confirmButton: "swal-button",
+        },
       });
     }
   };
@@ -198,39 +205,57 @@ const ControlPanel = () => {
             <p>Carregando dados...</p>
           ) : activeTab === "ranking" ? (
             <>
-              <h2>Selecione um quiz para ver o ranking</h2>
+              <h2>Selecione um jogo para ver o ranking</h2>
               <select
-                value={selectedQuizId}
+                value={selectedGameType}
                 onChange={(e) => {
-                  const id = e.target.value;
-                  setSelectedQuizId(id);
-                  fetchRanking(id);
+                  setSelectedGameType(e.target.value);
+                  setSelectedGameId("");
+                  setRanking([]);
                 }}
               >
-                <option value="">Selecione um quiz</option>
-                {quizzes.map((quiz) => (
-                  <option key={quiz.id} value={quiz.id}>
-                    {quiz.title}
-                  </option>
-                ))}
+                <option value="">Selecione o tipo de jogo</option>
+                <option value="quiz">Quiz</option>
+                <option value="sequence">Sequência</option>
               </select>
+              {selectedGameType && (
+                <select
+                  value={selectedGameId}
+                  onChange={(e) => {
+                    const id = e.target.value;
+                    setSelectedGameId(id);
+                    fetchRanking(selectedGameType, id);
+                  }}
+                >
+                  <option value="">
+                    {selectedGameType === "quiz"
+                      ? "Selecione um quiz"
+                      : "Selecione um jogo de sequência"}
+                  </option>
+                    {Array.isArray(selectedGameType === "quiz" ? quizzes : sequenceGames) &&
+                      (selectedGameType === "quiz" ? quizzes : sequenceGames).map((game) => (
+                        <option key={game.id} value={game.id}>
+                          {game.title}
+                        </option>
+                    ))}
+                </select>
+              )}
               {ranking.length > 0 && (
                 <>
-                  <h3>Ranking do quiz</h3>
+                  <h3>Ranking</h3>
                   <DataGrid
                     data={ranking}
                     columns={[
                       {
                         header: "Posição",
-                        render: (_, idx) => `${idx + 1}º`, // Posição no ranking
+                        render: (_, idx) => `${idx + 1}º`,
                       },
-                      { header: "Usuário", key: "username" }, // Nome do usuário
-                      { header: "Acertos", key: "correctanswers" }, // Número de acertos
+                      { header: "Usuário", key: "username" },
+                      { header: "Acertos", key: "correctanswers" },
                       {
                         header: "Tempo",
                         key: "timeinseconds",
                         render: (item) => {
-                          // Formatação de tempo (minutos e segundos)
                           const mins = Math.floor(item.timeinseconds / 60);
                           const secs = item.timeinseconds % 60;
                           return `${mins}m ${secs < 10 ? "0" : ""}${secs}s`;
@@ -275,9 +300,12 @@ const ControlPanel = () => {
                     }
                   />
                 </label>
-
                 {!isCreatingNew && !showPasswordFields && (
-                  <button className="button-panel-trocar" type="button" onClick={() => setShowPasswordFields(true)}>
+                  <button
+                    className="button-panel-trocar"
+                    type="button"
+                    onClick={() => setShowPasswordFields(true)}
+                  >
                     Trocar senha
                   </button>
                 )}
@@ -306,7 +334,9 @@ const ControlPanel = () => {
                 )}
 
                 <div style={{ marginTop: "1rem" }}>
-                  <button className="button-panel-salvar" type="submit">Salvar</button>
+                  <button className="button-panel-salvar" type="submit">
+                    Salvar
+                  </button>
                   <button
                     className="button-panel-cancelar"
                     type="button"
@@ -327,7 +357,8 @@ const ControlPanel = () => {
                     : "Lista de Alunos"}
                 </h2>
                 <button className="new-button-panel" onClick={handleNewUser}>
-                  Cadastrar Novo {activeTab === "professores" ? "Professor" : "Aluno"}
+                  Cadastrar Novo{" "}
+                  {activeTab === "professores" ? "Professor" : "Aluno"}
                 </button>
               </div>
               <DataGrid
