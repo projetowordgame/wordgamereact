@@ -5,12 +5,12 @@ import "./MyActivities.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const FreeQuizz = () => {
-  const [quizzes, setQuizzes] = useState([]);
+const FreeSequence = () => {
+  const [sequences, setSequences] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchQuizzes = async () => {
+    const fetchSequences = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
         navigate("/login");
@@ -26,16 +26,16 @@ const FreeQuizz = () => {
       const userData = await userResponse.json();
       const userId = userData.id;
 
-      // Obtém os quizzes livres(usuario admin)
-      const quizResponse = await fetch(`${API_URL}/quizzes/freequizz`, {
+      // Obtém os sequences livres(usuario admin)
+      const sequenceResponse = await fetch(`${API_URL}/sequence-games/freesequence`, {
         method: "GET"
       });
 
-      const quizData = await quizResponse.json();
-      setQuizzes(quizData);
+      const sequenceData = await sequenceResponse.json();
+      setSequences(sequenceData);
     };
 
-    fetchQuizzes();
+    fetchSequences();
   }, [navigate]);
 
 
@@ -45,13 +45,13 @@ const FreeQuizz = () => {
       <div className="my-activities-container">
         <h2>Minhas Atividades</h2>
         <div className="quiz-list">
-          {quizzes.length === 0 ? (
-            <p>Você ainda não criou nenhum quiz.</p>
+          {sequences.length === 0 ? (
+            <p>Você ainda não criou nenhum Jogo da sequencia.</p>
           ) : (
-            quizzes.map((quiz) => (
-              <div key={quiz.id} className="quiz-card" onClick={() => navigate(`/quizz/${quiz.id}`)}>
-                <img src="/images/perguntas.png" alt="Quiz" className="quiz-image" />
-                <h3>{quiz.title}</h3>
+            sequences.map((sequence) => (
+              <div key={sequence.id} className="quiz-card" onClick={() => navigate(`/sequence-games/${sequence.id}`)}>
+                <img src="/images/sequencia.jpg" alt="Sequencia" className="sequencia-image" />
+                <h3>{sequence.title}</h3>
               </div>
             ))
           )}
@@ -61,4 +61,4 @@ const FreeQuizz = () => {
   );
 };
 
-export default FreeQuizz;
+export default FreeSequence;

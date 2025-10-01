@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import  Header from "./components/header/header";
 import "./Dashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -15,14 +17,20 @@ const Dashboard = () => {
       route: "/create-quizz"
     },
     {
+      id: "sequencia",
+      name: "Jogo da Sequência",
+      description: "Ordene os itens na sequência correta",
+      image: "/images/sequencia.jpg",
+      route: "/create-sequence"
+    },
+        {
       id: "forca",
       name: "Jogo da Forca",
-      description: "Crie desafios de forca e veja se seus amigos acertam as palavras.",
+      description: "Adivinhe a palavra antes de formar o corpo",
       image: "/images/forca.png",
-      route: "/criar-forca"
-    }
+      route: "/create-forca"
+    },
   ];
-
 
 
   useEffect(() => {
@@ -34,7 +42,7 @@ const Dashboard = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:3000/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

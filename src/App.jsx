@@ -12,6 +12,9 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import FreeQuizz from "./FreeQuizz";
 import ControlPanel from "./ControlPanel";
 import Home from "./Home";
+import CreateSequence from "./CreateSequence";
+import PlaySequenceGame from "./PlaySequenceGame";
+import FreeSequence from "./FreeSequence";
 
 function App() {
   return (
@@ -24,7 +27,9 @@ function App() {
         <Route path="/student-activities" element={<StudentActivities />} /> {/* Tela de Consultar quizzes criado pelos professores */}
         <Route path="/free-activities" element={<FreeActivities />} /> {/* Tela de Consultar jogos livres */}
         <Route path="/free-quizz" element={<FreeQuizz />} /> {/* Tela de Consultar quizzes livres */}
+        <Route path="/free-sequence" element={<FreeSequence />} /> {/* Tela de Consultar Sequences livres */}
         <Route path="/quizz/:id" element={<PlayQuiz />} /> {/* 🚀 Rota de jogo Quiz */}
+        <Route path="/sequence-games/:id" element={<PlaySequenceGame />} /> {/* 🚀 Rota de jogo Sequence */}
 
         {/* 🚀 Protegendo as rotas de professor */}
         <Route
@@ -40,6 +45,15 @@ function App() {
           element={
             <ProtectedRoute allowedRoles={["professor"]}>
               <CreateQuizz /> {/* Tela de Criar Quizz */}
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-sequence"
+          element={
+            <ProtectedRoute allowedRoles={["professor"]}>
+              <CreateSequence /> {/* Tela de Criar Quizz */}
             </ProtectedRoute>
           }
         />

@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import  Header from "./components/header/header";
 import "./Dashboard.css";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const FreeActivities = () => {
   const navigate = useNavigate();
 
@@ -15,12 +17,19 @@ const FreeActivities = () => {
       route: "/free-quizz"
     },
     {
+      id: "sequencia",
+      name: "Jogo da Sequência",
+      description: "Ordene os itens na sequência correta",
+      image: "/images/sequencia.jpg",
+      route: "/free-sequence"
+    },
+    {
       id: "forca",
       name: "Jogo da Forca",
-      description: "Crie desafios de forca e veja se seus amigos acertam as palavras.",
+      description: "Adivinhe a palavra antes de formar o corpo",
       image: "/images/forca.png",
-      route: "/criar-forca"
-    }
+      route: "/free-forca"
+    },
   ];
 
 
@@ -34,7 +43,7 @@ const FreeActivities = () => {
 
   const handleLogout = async () => {
     try {
-      await fetch("http://localhost:3000/auth/logout", {
+      await fetch(`${API_URL}/auth/logout`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -52,7 +61,6 @@ const FreeActivities = () => {
     <>
       <Header />
       <div className="dashboard-container">
-        <img src="/images/logoKidsGames.jpeg" alt="Logo" />
         <h2>Jogos Livres: Escolha um jogo!</h2>
         <div className="games-grid">
           {games.map((game) => (

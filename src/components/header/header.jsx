@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./header.css"; // Importa o CSS
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const Header = () => {
   const [user, setUser] = useState(null);
   const navigate = useNavigate();
@@ -9,7 +11,7 @@ const Header = () => {
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (token) {
-      fetch("http://localhost:3000/auth/profile", {
+      fetch(`${API_URL}/auth/profile`, {
         method: "GET",
         headers: { Authorization: `Bearer ${token}` },
       })
@@ -41,12 +43,12 @@ const Header = () => {
 
   return (
     <header className="header">
-      <h1 className="logo" onClick={() => navigate("/")}>Learn by Playing</h1>
+      <h1 className="logo" onClick={() => navigate("/")}>KidsGames</h1>
       <nav>
         {user ? (
           <div className="nav-links">
-            <button onClick={() => navigate("/student-activities")}>Área do Professor</button>
-            <button onClick={() => navigate("/free-activities")}>Área do Aluno</button>
+            <button onClick={() => navigate("/student-activities")}>Jogos de Professores</button>
+            <button onClick={() => navigate("/free-activities")}>Jogos Livres</button>
 
             {/* Exibe apenas se for professor */}
             {user.role === "professor" && (

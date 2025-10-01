@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import "./PlayQuiz.css";
 import Header from "./components/header/header";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 const PlayQuiz = () => {
   const { id } = useParams(); // ID do quiz na URL
   const navigate = useNavigate();
@@ -14,6 +16,7 @@ const PlayQuiz = () => {
   const [ranking, setRanking] = useState([]);
   const [startTime, setStartTime] = useState(null);
   const [quizDuration, setQuizDuration] = useState(0); // em segundos
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -22,7 +25,7 @@ const PlayQuiz = () => {
 
   useEffect(() => {
     const fetchQuiz = async () => {
-      const response = await fetch(`http://localhost:3000/quizzes/${id}`);
+      const response = await fetch(`${API_URL}/quizzes/${id}`);
       const data = await response.json();
       setQuiz(data);
       setStartTime(Date.now()); // Inicia contagem do tempo
@@ -34,14 +37,25 @@ const PlayQuiz = () => {
   const saveScore = async (correctAnswers, durationInSeconds) => {
     const token = localStorage.getItem("token");
 
-    const profileResponse = await fetch("http://localhost:3000/auth/profile", {
+    if (!token) {
+      setIsLoggedIn(false); // não logado
+      return;
+    }
+
+    const profileResponse = await fetch(`${API_URL}/auth/profile`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    if (!profileResponse.ok) {
+      setIsLoggedIn(false);
+      return;
+    }
+
     const user = await profileResponse.json();
+    setIsLoggedIn(true); // logado
 
     // Envia score e tempo para o backend
-    await fetch(`http://localhost:3000/quizzes/ranking/${id}`, {
+    await fetch(`${API_URL}/quizzes/ranking/${id}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -54,7 +68,7 @@ const PlayQuiz = () => {
     });
 
     // Busca ranking atualizado
-    const rankingResponse = await fetch(`http://localhost:3000/quizzes/ranking/${id}`);
+    const rankingResponse = await fetch(`${API_URL}/quizzes/ranking/${id}`);
     const rankingData = await rankingResponse.json();
     setRanking(rankingData);
   };
@@ -129,11 +143,16 @@ const PlayQuiz = () => {
             <p>✅ Respostas Corretas: {score.correct}</p>
             <p>❌ Respostas Erradas: {score.wrong}</p>
             <p>⏱️ Tempo Total: {formatTime(quizDuration)}</p>
-            <button onClick={restartGame}>🔄 Jogar Novamente</button>
+            <button className="button-again" onClick={restartGame}>🔄 Jogar Novamente</button>
 
             {/* 🏆 Ranking */}
             <div className="ranking">
               <h3>🏆 Ranking</h3>
+              {!isLoggedIn && (
+                <p style={{ color: "#b00", fontWeight: "bold" }}>
+                  🔐 Faça login para participar do ranking!
+                </p>
+              )}
               {ranking.length === 0 ? (
                 <p>Nenhum jogador ainda.</p>
               ) : (
@@ -150,9 +169,9 @@ const PlayQuiz = () => {
                     {ranking.map((entry, index) => (
                       <tr key={index}>
                         <td>{index + 1}º</td>
-                        <td>{entry.userName}</td>
-                        <td>{entry.correctAnswers}</td>
-                        <td>{formatTime(entry.timeInSeconds)}</td>
+                        <td>{entry.username}</td>
+                        <td>{entry.correctanswers}</td>
+                        <td>{formatTime(entry.timeinseconds)}</td>
                       </tr>
                     ))}
                   </tbody>
