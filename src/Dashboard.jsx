@@ -28,7 +28,7 @@ const Dashboard = () => {
       name: "Jogo da Forca",
       description: "Adivinhe a palavra antes de formar o corpo",
       image: "/images/forca.png",
-      route: "/create-forca"
+      route: "/create-gallow"
     },
   ];
 

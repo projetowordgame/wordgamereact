@@ -152,13 +152,15 @@ const PlaySequenceGame = () => {
   };
 
   // 🔄 função para reiniciar o jogo
-  const restartGame = () => {
-    setIsFinished(false);
-    setSlots(Array(game.cards.length).fill(null));
-    setCards(shuffleArray(data.cards));
-    setResults({ correct: 0, wrong: 0 });
-    setStartTime(Date.now());
-  };
+    const restartGame = () => {
+      if (!game) return; // segurança
+
+      setIsFinished(false);
+      setSlots(Array(game.cards.length).fill(null));
+      setCards(shuffleArray(game.cards));
+      setResults({ correct: 0, wrong: 0 });
+      setStartTime(Date.now());
+    };
 
   if (!game) {
     return <p>Carregando jogo...</p>;

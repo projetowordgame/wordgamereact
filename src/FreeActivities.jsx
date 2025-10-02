@@ -28,7 +28,7 @@ const FreeActivities = () => {
       name: "Jogo da Forca",
       description: "Adivinhe a palavra antes de formar o corpo",
       image: "/images/forca.png",
-      route: "/free-forca"
+      route: "/free-gallow"
     },
   ];
 
