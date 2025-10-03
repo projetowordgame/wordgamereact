@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Header from "./components/header/header";
 import "./PlayGallow.css";
+import Swal from "sweetalert2";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -28,6 +29,15 @@ const PlayGallow = () => {
     return `${mins}m ${secs < 10 ? "0" : ""}${secs}s`;
   };
 
+  const displayWord = game?.keyword
+    ?.split("")
+    .map((letter) =>
+      guessedLetters.includes(letter.toLowerCase()) || (isFinished && won)
+        ? letter
+        : "_"
+    )
+    .join(" ") || "";
+
   useEffect(() => {
     const fetchGame = async () => {
       const res = await fetch(`${API_URL}/gallow/${id}`);
@@ -38,6 +48,36 @@ const PlayGallow = () => {
     fetchGame();
   }, [id]);
 
+    useEffect(() => {
+    if (!game || isFinished) return;
+
+    const palavraCompleta = normalize(displayWord.replace(/ /g, ""));
+    const palavraCorreta = normalize(game.keyword);
+
+    if (palavraCompleta === palavraCorreta) {
+      setWon(true);
+      setIsFinished(true);
+    }
+
+    if (wrongGuesses >= maxWrong) {
+      setWon(false);
+      setIsFinished(true);
+    }
+  }, [wrongGuesses, guessedLetters, game, isFinished, displayWord]);
+
+
+  useEffect(() => {
+    if (!isFinished) return;
+
+    Swal.fire({
+      icon: won ? "success" : "error",
+      title: won ? "🎉 Você venceu!" : "💀 Você perdeu!",
+      confirmButtonText: "Finalizar",
+    }).then(() => {
+      handleFinish();
+    });
+  }, [isFinished, won]);
+
   const handleLetterGuess = (letter) => {
     if (isFinished || guessedLetters.includes(letter)) return;
     setGuessedLetters([...guessedLetters, letter]);
@@ -47,9 +87,16 @@ const PlayGallow = () => {
     }
   };
 
+    const normalize = (str) =>
+    str
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .toLowerCase();
+
   const handleWordGuess = () => {
     if (isFinished) return;
-    if (wordGuess.trim().toLowerCase() === game.keyword.toLowerCase()) {
+
+    if (normalize(wordGuess.trim()) === normalize(game.keyword)) {
       setWon(true);
       setIsFinished(true);
     } else {
@@ -99,8 +146,6 @@ const PlayGallow = () => {
     const rankingRes = await fetch(`${API_URL}/gallow/ranking/${id}`);
     const rankingData = await rankingRes.json();
     setRanking(rankingData);
-
-    setIsFinished(true);
   };
 
   const restartGame = () => {
@@ -117,15 +162,6 @@ const PlayGallow = () => {
 
   if (!game) return <p>Carregando jogo...</p>;
 
-  const displayWord = game.keyword
-    .split("")
-    .map((letter) =>
-      guessedLetters.includes(letter.toLowerCase()) || (isFinished && won)
-        ? letter
-        : "_"
-    )
-    .join(" ");
-
   const isLost = wrongGuesses >= maxWrong;
 
   return (
@@ -136,19 +172,20 @@ const PlayGallow = () => {
 
         {!isFinished ? (
           <div className="gallow-game">
-            <div className="gallow-drawing">
-              <p>Tentativas: {wrongGuesses}/{maxWrong}</p>
-              <div className="stick-figure">
-                {wrongGuesses > 0 && <div className="head">⚪</div>}
-                {wrongGuesses > 1 && <div className="body">│</div>}
-                {wrongGuesses > 2 && <div className="left-arm">╱</div>}
-                {wrongGuesses > 3 && <div className="right-arm">╲</div>}
-                {wrongGuesses > 4 && <div className="left-leg">╱</div>}
-                {wrongGuesses > 5 && <div className="right-leg">╲</div>}
+            <div className="gallow-word-area">
+              <div className="gallow-drawing">
+                <p>
+                  Tentativas: {wrongGuesses}/{maxWrong}
+                </p>
+                <img
+                  src={`/forca/imagem${wrongGuesses + 1}.png`}
+                  alt={`Estado da forca ${wrongGuesses}`}
+                  className="gallow-image"
+                />
               </div>
-            </div>
 
-            <div className="word-display">{displayWord}</div>
+              <div className="word-display">{displayWord}</div>
+            </div>
 
             <div className="letter-inputs">
               {"abcdefghijklmnopqrstuvwxyz".split("").map((l) => (
@@ -174,21 +211,16 @@ const PlayGallow = () => {
 
             <div className="tips">
               {revealedTips.map((tip, i) => (
-                <p key={i}>Dica {i + 1}: {tip}</p>
+                <b key={i}>
+                  <h3>
+                    Dica {i + 1}: {tip}
+                  </h3>
+                </b>
               ))}
               {revealedTips.length < 2 && (
                 <button onClick={handleTip}>Pedir Dica</button>
               )}
             </div>
-
-            {(isLost || displayWord.replace(/ /g, "") === game.keyword) && (
-              <div className="end-game">
-                <h3>{isLost ? "💀 Você perdeu!" : "🎉 Você venceu!"}</h3>
-                <button className="button-finish" onClick={handleFinish}>
-                  Finalizar
-                </button>
-              </div>
-            )}
           </div>
         ) : (
           <div className="results">

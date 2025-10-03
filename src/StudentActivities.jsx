@@ -39,13 +39,13 @@ const StudentActivities = () => {
       setSequenceGames(seqData);
 
       // buscar jogos da forca
-      // const hangRes = await fetch(`${API_URL}/hangman-games/user/${teacherId}`);
-      // const hangData = await hangRes.json();
-      // setHangmanGames(hangData);
+      const hangRes = await fetch(`${API_URL}/gallow/user/${teacherId}`);
+      const hangData = await hangRes.json();
+      setHangmanGames(hangData);
     } else {
       setQuizzes([]);
       setSequenceGames([]);
-      // setHangmanGames([]);
+      setHangmanGames([]);
     }
   };
 
@@ -104,7 +104,7 @@ const StudentActivities = () => {
         <hr />
 
         {/* --- Seção Forca --- */}
-        {/* <h2>Jogos da Forca</h2>
+        <h2>Jogos da Forca</h2>
         <div className="quiz-list-student">
           {hangmanGames.length === 0 ? (
             <p>Nenhum jogo de forca disponível.</p>
@@ -113,14 +113,14 @@ const StudentActivities = () => {
               <div
                 key={game.id}
                 className="quiz-card-student"
-                onClick={() => navigate(`/hangman/${game.id}`)}
+                onClick={() => navigate(`/gallow/${game.id}`)}
               >
                 <img src="/images/forca.png" alt="Forca" className="quiz-image-student" />
                 <h3>{game.title}</h3>
               </div>
             ))
           )}
-        </div> */}
+        </div>
       </div>
     </>
   );

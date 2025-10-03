@@ -14,6 +14,7 @@ const ControlPanel = () => {
   const [loading, setLoading] = useState(true);
   const [quizzes, setQuizzes] = useState([]);
   const [sequenceGames, setSequenceGames] = useState([]);
+  const [gallowGames, setGallow] = useState([]);
   const [ranking, setRanking] = useState([]);
   const [selectedGameType, setSelectedGameType] = useState("");
   const [selectedGameId, setSelectedGameId] = useState("");
@@ -29,7 +30,14 @@ const ControlPanel = () => {
       const endpoint =
         type === "quiz"
           ? `${API_URL}/quizzes/ranking/${id}`
-          : `${API_URL}/sequence-games/ranking/${id}`;
+          : type === "sequence"
+          ? `${API_URL}/sequence-games/ranking/${id}`
+          : type === "gallow"
+          ? `${API_URL}/gallow/ranking/${id}`
+          : "";
+
+      if (!endpoint) return;
+
       const response = await fetch(endpoint);
       const data = await response.json();
       setRanking(data);
@@ -48,23 +56,26 @@ const ControlPanel = () => {
       const userData = await userResponse.json();
       const userId = userData.id;
 
-      const [profResp, alunosResp, quizzesResp, sequenceResp] =
+      const [profResp, alunosResp, quizzesResp, sequenceResp, gallowResp] =
         await Promise.all([
           fetch(`${API_URL}/auth/teachers`),
           fetch(`${API_URL}/auth/students`),
           fetch(`${API_URL}/quizzes/user/${userId}`),
           fetch(`${API_URL}/sequence-games/user/${userId}`),
+          fetch(`${API_URL}/gallow/user/${userId}`),
         ]);
 
       const profData = await profResp.json();
       const alunosData = await alunosResp.json();
       const quizzesData = await quizzesResp.json();
       const sequenceData = await sequenceResp.json();
+      const gallowData = await gallowResp.json();
 
       setProfessores(profData);
       setAlunos(alunosData);
       setQuizzes(Array.isArray(quizzesData) ? quizzesData : []);
       setSequenceGames(Array.isArray(sequenceData) ? sequenceData : []);
+      setGallow(Array.isArray(gallowData) ? gallowData : []);
     } catch (error) {
       console.error("Erro ao buscar dados:", error);
     } finally {
@@ -206,39 +217,51 @@ const ControlPanel = () => {
           ) : activeTab === "ranking" ? (
             <>
               <h2>Selecione um jogo para ver o ranking</h2>
-              <select
-                value={selectedGameType}
-                onChange={(e) => {
-                  setSelectedGameType(e.target.value);
-                  setSelectedGameId("");
-                  setRanking([]);
-                }}
-              >
-                <option value="">Selecione o tipo de jogo</option>
-                <option value="quiz">Quiz</option>
-                <option value="sequence">Sequência</option>
-              </select>
-              {selectedGameType && (
+
                 <select
-                  value={selectedGameId}
+                  value={selectedGameType}
                   onChange={(e) => {
-                    const id = e.target.value;
-                    setSelectedGameId(id);
-                    fetchRanking(selectedGameType, id);
+                    setSelectedGameType(e.target.value);
+                    setSelectedGameId("");
+                    setRanking([]);
                   }}
                 >
-                  <option value="">
-                    {selectedGameType === "quiz"
-                      ? "Selecione um quiz"
-                      : "Selecione um jogo de sequência"}
-                  </option>
-                    {Array.isArray(selectedGameType === "quiz" ? quizzes : sequenceGames) &&
-                      (selectedGameType === "quiz" ? quizzes : sequenceGames).map((game) => (
-                        <option key={game.id} value={game.id}>
-                          {game.title}
-                        </option>
-                    ))}
+                  <option value="">Selecione o tipo de jogo</option>
+                  <option value="quiz">Quiz</option>
+                  <option value="sequence">Sequência</option>
+                  <option value="gallow">Jogo da Forca</option> {/* NOVO */}
                 </select>
+
+              {selectedGameType && (
+
+                  <select
+                    value={selectedGameId}
+                    onChange={(e) => {
+                      const id = e.target.value;
+                      setSelectedGameId(id);
+                      fetchRanking(selectedGameType, id);
+                    }}
+                  >
+                    <option value="">
+                      {selectedGameType === "quiz"
+                        ? "Selecione um quiz"
+                        : selectedGameType === "sequence"
+                        ? "Selecione um jogo de sequência"
+                        : "Selecione um jogo da forca"}
+                    </option>
+                    {(selectedGameType === "quiz"
+                      ? quizzes
+                      : selectedGameType === "sequence"
+                      ? sequenceGames
+                      : gallowGames
+                    ).map((game) => (
+                      <option key={game.id} value={game.id}>
+                        {game.title}
+                      </option>
+                    ))}
+                  </select>
+
+
               )}
               {ranking.length > 0 && (
                 <>

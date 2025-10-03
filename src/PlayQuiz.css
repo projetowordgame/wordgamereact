@@ -101,3 +101,29 @@
     background-color: #e0e0e0;
   }
   
+.gallow-word-area {
+  display: flex;
+  align-items: center;
+  gap: 20px; 
+  margin-bottom: 20px;
+  justify-content: center;
+}
+
+.gallow-drawing {
+  text-align: center;
+  font-size: 14px;
+}
+
+.gallow-image {
+  width: 120px;  
+  height: auto;
+  object-fit: contain;
+  margin-top: 5px;
+}
+
+.word-display {
+  font-size: 28px;
+  letter-spacing: 12px;
+  font-weight: bold;
+}
+
