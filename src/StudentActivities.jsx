@@ -94,7 +94,7 @@ const StudentActivities = () => {
                 className="quiz-card-student"
                 onClick={() => navigate(`/sequence-games/${game.id}`)}
               >
-                <img src="/images/sequencia.jpg" alt="Sequência" className="quiz-image-student" />
+                <img src="/images/sequencia.png" alt="Sequência" className="quiz-image-student" />
                 <h3>{game.title}</h3>
               </div>
             ))

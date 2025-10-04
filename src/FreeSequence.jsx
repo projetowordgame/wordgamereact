@@ -50,7 +50,7 @@ const FreeSequence = () => {
           ) : (
             sequences.map((sequence) => (
               <div key={sequence.id} className="quiz-card" onClick={() => navigate(`/sequence-games/${sequence.id}`)}>
-                <img src="/images/sequencia.jpg" alt="Sequencia" className="sequencia-image" />
+                <img src="/images/sequencia.png" alt="Sequencia" className="sequencia-image" />
                 <h3>{sequence.title}</h3>
               </div>
             ))

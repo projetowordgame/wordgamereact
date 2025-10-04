@@ -127,7 +127,7 @@ const MyActivities = () => {
                 className="quiz-card"
                 onClick={() => navigate(`/sequence-games/${game.id}`)}
               >
-                <img src="/images/sequencia.jpg" alt="Sequência" className="quiz-image" />
+                <img src="/images/sequencia.png" alt="Sequência" className="quiz-image" />
                 <h3>{game.title}</h3>
                 <Trash2
                   className="delete-icon"

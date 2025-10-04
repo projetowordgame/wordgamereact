@@ -20,7 +20,7 @@ const FreeActivities = () => {
       id: "sequencia",
       name: "Jogo da Sequência",
       description: "Ordene os itens na sequência correta",
-      image: "/images/sequencia.jpg",
+      image: "/images/sequencia.png",
       route: "/free-sequence"
     },
     {
