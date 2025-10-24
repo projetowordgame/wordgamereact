@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { Trash2 } from "lucide-react"; // ✅ Ícone de lixeira
+import { Trash2 } from "lucide-react";
 import Swal from "sweetalert2";
 import Header from "./components/header/header";
 import "./CreateQuizz.css";
@@ -33,7 +33,27 @@ const CreateQuizz = () => {
     fetchUserData();
   }, [navigate]);
 
-  // ✅ Adicionar uma nova pergunta (máximo de 10)
+  const showInstructions = () => {
+    Swal.fire({
+      title: "📘 Instruções para criar seu Quiz",
+      html: `
+        <div style="text-align: left; font-size: 16px; line-height: 1.6;">
+          <p><b>1.</b> O <b>Título do Quiz</b> será o nome que aparecerá na sua lista de quizzes criados.</p>
+          <p><b>2.</b> Adicione perguntas clicando no botão <b>“Adicionar Pergunta”</b>.</p>
+          <p><b>3.</b> Para cada pergunta, crie <b>4 respostas</b> clicando em <b>“Adicionar Resposta”</b>. 
+          Selecione a correta clicando na <b>bolinha ao lado da resposta</b>.</p>
+          <p><b>4.</b> Após adicionar até <b>10 perguntas</b>, clique em <b>“Criar Quiz”</b> para finalizar.</p>
+          <p><b>5.</b> Depois vá em <b>“Meus Jogos”</b> para visualizar o quiz criado.</p>
+        </div>
+      `,
+      confirmButtonText: "Entendido",
+      customClass: {
+        popup: "swal-wide",
+        confirmButton: "swal-button",
+      },
+    });
+  };
+
   const addQuestion = () => {
     if (questions.length < 10) {
       setQuestions([...questions, { text: "", answers: [{ text: "", isCorrect: false }] }]);
@@ -50,12 +70,10 @@ const CreateQuizz = () => {
     }
   };
 
-  // ✅ Excluir uma pergunta
   const deleteQuestion = (qIndex) => {
     setQuestions(questions.filter((_, index) => index !== qIndex));
   };
 
-  // ✅ Adicionar uma nova resposta (máximo de 4 por pergunta)
   const addAnswer = (qIndex) => {
     if (questions[qIndex].answers.length < 4) {
       const newQuestions = [...questions];
@@ -74,28 +92,24 @@ const CreateQuizz = () => {
     }
   };
 
-  // ✅ Excluir uma resposta
   const deleteAnswer = (qIndex, aIndex) => {
     const newQuestions = [...questions];
     newQuestions[qIndex].answers = newQuestions[qIndex].answers.filter((_, index) => index !== aIndex);
     setQuestions(newQuestions);
   };
 
-  // ✅ Atualizar pergunta
   const updateQuestion = (index, value) => {
     const newQuestions = [...questions];
     newQuestions[index].text = value;
     setQuestions(newQuestions);
   };
 
-  // ✅ Atualizar resposta
   const updateAnswer = (qIndex, aIndex, value) => {
     const newQuestions = [...questions];
     newQuestions[qIndex].answers[aIndex].text = value;
     setQuestions(newQuestions);
   };
 
-  // ✅ Definir resposta correta (apenas uma por pergunta)
   const setCorrectAnswer = (qIndex, aIndex) => {
     const newQuestions = [...questions];
     newQuestions[qIndex].answers = newQuestions[qIndex].answers.map((ans, i) => ({
@@ -105,7 +119,6 @@ const CreateQuizz = () => {
     setQuestions(newQuestions);
   };
 
-  // ✅ Enviar quiz para o backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -120,7 +133,7 @@ const CreateQuizz = () => {
       });
       return;
     }
-  
+
     if (!title.trim() || questions.length === 0) {
       Swal.fire({
         icon: "warning",
@@ -133,19 +146,13 @@ const CreateQuizz = () => {
       });
       return;
     }
-  
+
     const response = await fetch(`${API_URL}/quizzes`, {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        userId: user.id,
-        title,
-        questions,
-      }),
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ userId: user.id, title, questions }),
     });
-  
+
     if (response.ok) {
       await Swal.fire({
         icon: "success",
@@ -175,7 +182,13 @@ const CreateQuizz = () => {
     <>
       <Header />
       <div className="create-quizz-container">
-        <h2>Criar Novo Quiz</h2>
+        <div className="title-row">
+          <h2>Criar Novo Quiz</h2>
+          <button className="help-button" type="button" onClick={showInstructions}>
+            ❓ Instruções
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
           <label>Título do Quiz:</label>
           <input
@@ -196,7 +209,7 @@ const CreateQuizz = () => {
                   onChange={(e) => updateQuestion(qIndex, e.target.value)}
                   required
                 />
-                <Trash2 className="delete-icon-quizz" onClick={() => deleteQuestion(qIndex)} /> {/* 🔴 Ícone de lixeira para excluir pergunta */}
+                <Trash2 className="delete-icon-quizz" onClick={() => deleteQuestion(qIndex)} />
               </div>
 
               <h4>Respostas:</h4>
@@ -215,7 +228,7 @@ const CreateQuizz = () => {
                     checked={a.isCorrect}
                     onChange={() => setCorrectAnswer(qIndex, aIndex)}
                   />
-                  <Trash2 className="delete-icon-quizz" onClick={() => deleteAnswer(qIndex, aIndex)} /> {/* 🔴 Ícone de lixeira para excluir resposta */}
+                  <Trash2 className="delete-icon-quizz" onClick={() => deleteAnswer(qIndex, aIndex)} />
                 </div>
               ))}
 

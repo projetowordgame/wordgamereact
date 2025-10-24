@@ -14,7 +14,6 @@ const CreateSequence = () => {
   const [cards, setCards] = useState([]);
   const navigate = useNavigate();
 
-  // Buscar usuário logado
   useEffect(() => {
     const fetchUserData = async () => {
       const token = localStorage.getItem("token");
@@ -35,35 +34,58 @@ const CreateSequence = () => {
     fetchUserData();
   }, [navigate]);
 
-  // Adicionar um novo card (máximo 8)
+  const showInstructions = () => {
+    Swal.fire({
+      title: "Instruções para criar um Jogo da Sequência",
+      html: `
+        <div style="text-align: left; font-size: 13px;">
+          <ol style="text-align: left;">
+            <li><b>Título do jogo</b>: será o nome que aparecerá para localizar e exibir o jogo aos alunos.</li>
+            <li><b>Descrição curta</b>: insira uma frase explicando a sequência, como “Organize o ciclo da água nas etapas corretas” ou “Organize as letras em ordem alfabética”.</li>
+            <li><b>Adicionar cards</b>: clique em “Adicionar card”. Cada card tem:
+              <ul>
+                <li><b>URL da imagem</b>: pode inserir o link da internet ou deixar em branco (usará imagem padrão).</li>
+                <li><b>Nome do card</b>: é o texto do card, como “Evaporação” ou “A”.</li>
+                <li><b>Posição correta</b>: número indicando a ordem certa (ex: “A” = 1, “C” = 3).</li>
+              </ul>
+            </li>
+            <li>Após adicionar até 5 cards, clique em <b>“Finalizar”</b> e depois vá em <b>“Meus Jogos”</b> para visualizar o jogo criado.</li>
+          </ol>
+        </div>
+      `,
+      icon: "info",
+      confirmButtonText: "Entendi!",
+      customClass: {
+        popup: "swal-wide",
+        confirmButton: "swal-button",
+      },
+    });
+  };
+
   const addCard = () => {
-    if (cards.length < 8) {
+    if (cards.length < 5) {
       setCards([...cards, { image_url: "", description: "", position: cards.length + 1 }]);
     } else {
       Swal.fire({
         icon: "info",
         title: "Limite atingido",
-        text: "O jogo pode ter no máximo 8 cards.",
+        text: "O jogo pode ter no máximo 5 cards.",
       });
     }
   };
 
-  // Excluir card
   const deleteCard = (index) => {
     const newCards = cards.filter((_, i) => i !== index);
-    // Reorganizar posições
     newCards.forEach((c, i) => (c.position = i + 1));
     setCards(newCards);
   };
 
-  // Atualizar campos do card
   const updateCard = (index, field, value) => {
     const newCards = [...cards];
     newCards[index][field] = value;
     setCards(newCards);
   };
 
-  // Enviar jogo para o backend
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -112,7 +134,14 @@ const CreateSequence = () => {
     <>
       <Header />
       <div className="create-sequence-container">
-        <h2>Criar Novo Sequence Game</h2>
+
+        <div className="title-row">
+          <h2>Criar Novo Jogo da Sequência</h2>
+          <button className="instructions-button" type="button" onClick={showInstructions}>
+            ❓ Instruções
+          </button>
+        </div>
+
         <form onSubmit={handleSubmit}>
           <label>Título do Jogo:</label>
           <input
@@ -142,18 +171,16 @@ const CreateSequence = () => {
                 placeholder="URL da Imagem"
                 value={card.image_url}
                 onChange={(e) => updateCard(index, "image_url", e.target.value)}
-                required
               />
               <input
                 type="text"
-                placeholder="Descrição"
+                placeholder="Nome do Card"
                 value={card.description}
                 onChange={(e) => updateCard(index, "description", e.target.value)}
-                required
               />
               <input
                 type="number"
-                placeholder="Posição"
+                placeholder="Posição Correta"
                 value={card.position}
                 onChange={(e) => updateCard(index, "position", Number(e.target.value))}
                 min="1"

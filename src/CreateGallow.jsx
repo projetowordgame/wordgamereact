@@ -34,6 +34,26 @@ const CreateGallow = () => {
     fetchUserData();
   }, [navigate]);
 
+    const showInstructions = () => {
+      Swal.fire({
+        title: "📘 Instruções para criar seu Quiz",
+        html: `
+          <div style="text-align: left; font-size: 16px; line-height: 1.6;">
+            <p><b>1.</b> O <b>Título do Quiz</b> será o nome que aparecerá na sua lista de Jogo da forca criados.</p>
+            <p><b>2.</b> Adicione a palavra secreta no campo <b>“Palavra secreta”</b>, é a palavra que o aluno deverá descobrir.</p>
+            <p><b>3.</b> Insira <b>2 dicas</b> da palavra secreta para o aluno tentar acertar, lembrando que ao pedir dica ele consumirá um membro do boneco da forca</b>. 
+            <p><b>4.</b> Após preencher os campos, clique em <b>“Criar Jogo”</b> para finalizar.</p>
+            <p><b>5.</b> Depois vá em <b>“Meus Jogos”</b> para visualizar o jogo da forca criado.</p>
+          </div>
+        `,
+        confirmButtonText: "Entendido",
+        customClass: {
+          popup: "swal-wide",
+          confirmButton: "swal-button",
+        },
+      });
+    };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!user) {
@@ -83,7 +103,21 @@ const CreateGallow = () => {
     <>
       <Header />
       <div className="create-sequence-container">
-        <h2>Criar Novo Jogo da Forca</h2>
+        {/* <h2>Criar Novo Jogo da Forca</h2> */}
+
+
+
+        <div className="title-row">
+          <h2>Criar Novo Jogo da Forca</h2>
+          <button className="instructions-button" type="button" onClick={showInstructions}>
+            ❓ Instruções
+          </button>
+        </div>
+
+
+
+
+
         <form onSubmit={handleSubmit}>
           <label>Título do Jogo:</label>
           <input
