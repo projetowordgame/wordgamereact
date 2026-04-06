@@ -18,12 +18,15 @@ const ControlPanel = () => {
   const [ranking, setRanking] = useState([]);
   const [selectedGameType, setSelectedGameType] = useState("");
   const [selectedGameId, setSelectedGameId] = useState("");
+  const [selectedQuizForAnalytics, setSelectedQuizForAnalytics] = useState("");
   const [editUser, setEditUser] = useState(null);
   const [showPasswordFields, setShowPasswordFields] = useState(false);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [isCreatingNew, setIsCreatingNew] = useState(false);
   const [userRole, setUserRole] = useState("");
+  const [quizzAnalytics, setQuizzAnalytics] = useState([]);
+  const [loadingAnalytics, setLoadingAnalytics] = useState(false);
 
   const fetchRanking = async (type, id) => {
     try {
@@ -43,6 +46,62 @@ const ControlPanel = () => {
       setRanking(data);
     } catch (error) {
       console.error("Erro ao buscar ranking:", error);
+    }
+  };
+
+  const fetchQuizzAnalytics = async () => {
+    try {
+      const response = await fetch(`${API_URL}/quizzes/analytics`);
+      const data = await response.json();
+      setQuizzAnalytics(Array.isArray(data) ? data : []);
+    } catch (error) {
+      console.error("Erro ao buscar análises:", error);
+    }
+  };
+
+  const handleAnalyzeClick = async (studentData) => {
+    try {
+      setLoadingAnalytics(true);
+      const quizzId = parseInt(selectedQuizForAnalytics);
+      const userId = parseInt(studentData.userid);
+
+      // Salva/atualiza os dados de análise
+      const response = await fetch(
+        `${API_URL}/quizzes/analytics/${quizzId}/${userId}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Erro ao salvar análise");
+      }
+
+      // Atualiza a tabela de análises
+      await fetchQuizzAnalytics();
+
+      Swal.fire({
+        icon: "success",
+        title: "Análise salva",
+        text: `Análise de ${studentData.username} foi salva com sucesso!`,
+        customClass: {
+          popup: "swal-wide",
+          confirmButton: "swal-button",
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao analisar:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: "Não foi possível salvar a análise.",
+        customClass: {
+          popup: "swal-wide",
+          confirmButton: "swal-button",
+        },
+      });
+    } finally {
+      setLoadingAnalytics(false);
     }
   };
 
@@ -85,6 +144,7 @@ const ControlPanel = () => {
 
   useEffect(() => {
     fetchData();
+    fetchQuizzAnalytics();
   }, []);
 
   const handleNewUser = () => {
@@ -287,6 +347,100 @@ const ControlPanel = () => {
                     ]}
                   />
                 </>
+              )}
+            </>
+          ) : activeTab === "analise" ? (
+            <>
+              <h2>Análise de Dados</h2>
+              <p>Selecione um quiz para ver os alunos que jogaram.</p>
+
+              <select
+                value={selectedQuizForAnalytics}
+                onChange={async (e) => {
+                  const quizId = e.target.value;
+                  setSelectedQuizForAnalytics(quizId);
+                  if (!quizId) {
+                    setRanking([]);
+                    return;
+                  }
+                  await fetchRanking("quiz", quizId);
+                }}
+              >
+                <option value="">Selecione um quiz</option>
+                {quizzes.map((quiz) => (
+                  <option key={quiz.id} value={quiz.id}>
+                    {quiz.title}
+                  </option>
+                ))}
+              </select>
+
+              {selectedQuizForAnalytics ? (
+                ranking.length > 0 ? (
+                  <>
+                    <h3>Alunos no quiz</h3>
+                    <DataGrid
+                      data={ranking}
+                      columns={[
+                        { header: "Posição", render: (_, idx) => `${idx + 1}º` },
+                        { header: "Aluno", key: "username" },
+                        { header: "Acertos", key: "correctanswers" },
+                        {
+                          header: "Tempo",
+                          key: "timeinseconds",
+                          render: (item) => {
+                            const mins = Math.floor(item.timeinseconds / 60);
+                            const secs = item.timeinseconds % 60;
+                            return `${mins}m ${secs < 10 ? "0" : ""}${secs}s`;
+                          },
+                        },
+                        {
+                          header: "Ação",
+                          render: (item) => (
+                            <button 
+                              className="button-analyze" 
+                              onClick={() => handleAnalyzeClick(item)}
+                              disabled={loadingAnalytics}
+                            >
+                              {loadingAnalytics ? "Carregando..." : "Analisar"}
+                            </button>
+                          ),
+                        },
+                      ]}
+                    />
+                    
+                    {quizzAnalytics.length > 0 && (
+                      <>
+                        <h3 style={{ marginTop: "2rem" }}>Tabela de Análises Salvas</h3>
+                        <DataGrid
+                          data={quizzAnalytics}
+                          columns={[
+                            { header: "Nome do Jogador", key: "playerName" },
+                            { header: "Acertos", key: "totalCorrect" },
+                            { header: "Erros", key: "totalIncorrect" },
+                            { header: "Total de Perguntas", key: "totalQuestions" },
+                            {
+                              header: "Tempo (segundos)",
+                              key: "timeInSeconds",
+                              render: (item) => `${item.timeInSeconds}s`,
+                            },
+                            {
+                              header: "Data",
+                              key: "createdAt",
+                              render: (item) => {
+                                const date = new Date(item.createdAt);
+                                return date.toLocaleString("pt-BR");
+                              },
+                            },
+                          ]}
+                        />
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <p>Sem dados</p>
+                )
+              ) : (
+                <p>Sem dados</p>
               )}
             </>
           ) : editUser ? (
