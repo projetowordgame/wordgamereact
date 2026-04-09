@@ -152,13 +152,15 @@ const PlaySequenceGame = () => {
   };
 
   // 🔄 função para reiniciar o jogo
-  const restartGame = () => {
-    setIsFinished(false);
-    setSlots(Array(game.cards.length).fill(null));
-    setCards(shuffleArray(data.cards));
-    setResults({ correct: 0, wrong: 0 });
-    setStartTime(Date.now());
-  };
+    const restartGame = () => {
+      if (!game) return; // segurança
+
+      setIsFinished(false);
+      setSlots(Array(game.cards.length).fill(null));
+      setCards(shuffleArray(game.cards));
+      setResults({ correct: 0, wrong: 0 });
+      setStartTime(Date.now());
+    };
 
   if (!game) {
     return <p>Carregando jogo...</p>;
@@ -190,10 +192,10 @@ const PlaySequenceGame = () => {
                       onClick={() => handleRemoveFromSlot(index)}
                     >
                       <img
-                        src={slot.image_url && slot.image_url.trim() !== "" ? slot.image_url : "/images/sequencia.jpg"}
+                        src={slot.image_url && slot.image_url.trim() !== "" ? slot.image_url : "/images/sequencia.png"}
                         alt={slot.description}
                         onError={(e) => {
-                          e.target.src = "/images/sequencia.jpg";
+                          e.target.src = "/images/sequencia.png";
                         }}
                         className="card-img"
                       />
@@ -214,10 +216,10 @@ const PlaySequenceGame = () => {
                   onDragStart={(e) => handleDragStart(e, card)}
                 >
                   <img
-                    src={card.image_url && card.image_url.trim() !== "" ? card.image_url : "/images/sequencia.jpg"}
+                    src={card.image_url && card.image_url.trim() !== "" ? card.image_url : "/images/sequencia.png"}
                     alt={card.description}
                     onError={(e) => {
-                      e.target.src = "/images/sequencia.jpg";
+                      e.target.src = "/images/sequencia.png";
                     }}
                     className="card-img"
                   />

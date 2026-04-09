@@ -20,7 +20,7 @@ const Dashboard = () => {
       id: "sequencia",
       name: "Jogo da Sequência",
       description: "Ordene os itens na sequência correta",
-      image: "/images/sequencia.jpg",
+      image: "/images/sequencia.png",
       route: "/create-sequence"
     },
         {
@@ -28,7 +28,7 @@ const Dashboard = () => {
       name: "Jogo da Forca",
       description: "Adivinhe a palavra antes de formar o corpo",
       image: "/images/forca.png",
-      route: "/create-forca"
+      route: "/create-gallow"
     },
   ];
 

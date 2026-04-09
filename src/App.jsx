@@ -15,6 +15,9 @@ import Home from "./Home";
 import CreateSequence from "./CreateSequence";
 import PlaySequenceGame from "./PlaySequenceGame";
 import FreeSequence from "./FreeSequence";
+import FreeGallow from "./FreeGallow";
+import CreateGallow from "./CreateGallow";
+import PlayGallow from "./PlayGallow";
 
 function App() {
   return (
@@ -28,8 +31,10 @@ function App() {
         <Route path="/free-activities" element={<FreeActivities />} /> {/* Tela de Consultar jogos livres */}
         <Route path="/free-quizz" element={<FreeQuizz />} /> {/* Tela de Consultar quizzes livres */}
         <Route path="/free-sequence" element={<FreeSequence />} /> {/* Tela de Consultar Sequences livres */}
+        <Route path="/free-gallow" element={<FreeGallow />} /> {/* Tela de Consultar Forca livres */}
         <Route path="/quizz/:id" element={<PlayQuiz />} /> {/* 🚀 Rota de jogo Quiz */}
         <Route path="/sequence-games/:id" element={<PlaySequenceGame />} /> {/* 🚀 Rota de jogo Sequence */}
+        <Route path="/gallow/:id" element={<PlayGallow />} /> {/* 🚀 Rota de jogo forca */}
 
         {/* 🚀 Protegendo as rotas de professor */}
         <Route
@@ -53,7 +58,16 @@ function App() {
           path="/create-sequence"
           element={
             <ProtectedRoute allowedRoles={["professor"]}>
-              <CreateSequence /> {/* Tela de Criar Quizz */}
+              <CreateSequence /> {/* Tela de Criar Sequencia */}
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-gallow"
+          element={
+            <ProtectedRoute allowedRoles={["professor"]}>
+              <CreateGallow /> {/* Tela de Criar Forca */}
             </ProtectedRoute>
           }
         />

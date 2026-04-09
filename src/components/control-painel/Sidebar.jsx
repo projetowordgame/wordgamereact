@@ -19,9 +19,15 @@ const Sidebar = ({ setActiveTab, activeTab }) => {
       <button
         className={`sidebar-button-panel ${activeTab === "ranking" ? "active" : ""}`}
         onClick={() => setActiveTab("ranking")}
-    >
-      Ranking
-    </button>
+      >
+        Ranking
+      </button>
+      <button
+        className={`sidebar-button-panel ${activeTab === "analise" ? "active" : ""}`}
+        onClick={() => setActiveTab("analise")}
+      >
+        Análise de Dados
+      </button>
     </div>
   );
 };

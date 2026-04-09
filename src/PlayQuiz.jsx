@@ -17,6 +17,8 @@ const PlayQuiz = () => {
   const [startTime, setStartTime] = useState(null);
   const [quizDuration, setQuizDuration] = useState(0); // em segundos
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userAnswers, setUserAnswers] = useState([]); // Array com respostas detalhadas
+  const [questionStartTime, setQuestionStartTime] = useState(null); // Tempo de início de cada pergunta
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60);
     const secs = seconds % 60;
@@ -29,12 +31,13 @@ const PlayQuiz = () => {
       const data = await response.json();
       setQuiz(data);
       setStartTime(Date.now()); // Inicia contagem do tempo
+      setQuestionStartTime(Date.now()); // Inicia tempo da primeira pergunta
     };
 
     fetchQuiz();
   }, [id]);
 
-  const saveScore = async (correctAnswers, durationInSeconds) => {
+  const saveScore = async (correctAnswers, durationInSeconds, answersArray) => {
     const token = localStorage.getItem("token");
 
     if (!token) {
@@ -54,7 +57,7 @@ const PlayQuiz = () => {
     const user = await profileResponse.json();
     setIsLoggedIn(true); // logado
 
-    // Envia score e tempo para o backend
+    // Envia score e tempo para o backend (endpoint existente)
     await fetch(`${API_URL}/quizzes/ranking/${id}`, {
       method: "POST",
       headers: {
@@ -67,14 +70,84 @@ const PlayQuiz = () => {
       }),
     });
 
+    // Aguarda respostas detalhadas serem salvas ANTES de salvar análise
+    await saveUserAnswers(user.id, durationInSeconds, answersArray);
+
+    // Aguarda um tempo para garantir que as respostas foram salvas no DB
+    await new Promise(resolve => setTimeout(resolve, 500));
+
+    // Agora salva a análise com as respostas já no DB
+    try {
+      await fetch(`${API_URL}/quizzes/analytics/${id}/${user.id}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao salvar análise:", error);
+    }
+
     // Busca ranking atualizado
     const rankingResponse = await fetch(`${API_URL}/quizzes/ranking/${id}`);
     const rankingData = await rankingResponse.json();
     setRanking(rankingData);
   };
 
-  const handleAnswerClick = (isCorrect) => {
+  const saveUserAnswers = async (userId, durationInSeconds, answersArray) => {
+    try {
+      console.log(`saveUserAnswers called with ${answersArray.length} answers`);
+      // Calcula tempo aproximado por pergunta
+      const timePerQuestion = Math.floor(durationInSeconds / quiz.questions.length);
+
+      // Formata os dados conforme esperado pela API
+      const formattedAnswers = answersArray.map((answer) => ({
+        questionId: answer.questionId,
+        answerId: answer.answerId,
+        isCorrect: answer.isCorrect,
+        timeSpentInSeconds: answer.timeSpentInSeconds || timePerQuestion,
+      }));
+
+      console.log(`Formatted answers:`, formattedAnswers);
+
+      // Envia para o novo endpoint
+      const response = await fetch(`${API_URL}/quizzes/${id}/user-answers/${userId}`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userAnswers: formattedAnswers,
+        }),
+      });
+
+      if (!response.ok) {
+        console.error("Erro ao salvar respostas detalhadas:", response.statusText);
+      } else {
+        console.log("Respostas salvas com sucesso!");
+      }
+    } catch (error) {
+      console.error("Erro ao enviar respostas detalhadas:", error);
+    }
+  };
+
+  const handleAnswerClick = (answer) => {
+    const isCorrect = answer.isCorrect;
     setSelectedAnswer(isCorrect ? "correct" : "wrong");
+
+    // Calcula tempo gasto nesta pergunta
+    const timeSpentInSeconds = Math.floor((Date.now() - questionStartTime) / 1000);
+
+    // Adiciona a resposta ao array com informações detalhadas
+    const newAnswer = {
+      questionId: quiz.questions[currentQuestion].id,
+      answerId: answer.id,
+      isCorrect: isCorrect,
+      timeSpentInSeconds: timeSpentInSeconds,
+    };
+
+    // Se for a última pergunta, acumula todas as respostas e passa para saveScore
+    const allAnswers = [...userAnswers, newAnswer];
 
     setTimeout(async () => {
       setSelectedAnswer(null);
@@ -86,11 +159,15 @@ const PlayQuiz = () => {
 
       if (currentQuestion + 1 < quiz.questions.length) {
         setCurrentQuestion(currentQuestion + 1);
+        setQuestionStartTime(Date.now()); // Reinicia o tempo para a próxima pergunta
+        // Atualiza userAnswers para próxima pergunta
+        setUserAnswers(allAnswers);
       } else {
         const endTime = Date.now();
         const durationInSeconds = Math.floor((endTime - startTime) / 1000);
         setQuizDuration(durationInSeconds);
-        await saveScore(isCorrect ? score.correct + 1 : score.correct, durationInSeconds);
+        // Passa o array completo de respostas
+        await saveScore(isCorrect ? score.correct + 1 : score.correct, durationInSeconds, allAnswers);
         setIsFinished(true);
       }
     }, 1000);
@@ -101,7 +178,9 @@ const PlayQuiz = () => {
     setScore({ correct: 0, wrong: 0 });
     setIsFinished(false);
     setRanking([]);
+    setUserAnswers([]); // Limpa respostas anteriores
     setStartTime(Date.now()); // reinicia cronômetro
+    setQuestionStartTime(Date.now()); // reinicia tempo da pergunta
   };
 
   if (!quiz) {
@@ -130,7 +209,7 @@ const PlayQuiz = () => {
                       ? "wrong"
                       : ""
                   }`}
-                  onClick={() => handleAnswerClick(answer.isCorrect)}
+                  onClick={() => handleAnswerClick(answer)}
                 >
                   {answer.text}
                 </div>

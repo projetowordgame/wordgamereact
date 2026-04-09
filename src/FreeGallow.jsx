@@ -5,12 +5,12 @@ import "./MyActivities.css";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
-const FreeSequence = () => {
-  const [sequences, setSequences] = useState([]);
+const FreeGallow = () => {
+  const [gallows, setGallows] = useState([]);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchSequences = async () => {
+    const fetchGallows = async () => {
       const token = localStorage.getItem("token");
       if (!token) {
         navigate("/login");
@@ -26,16 +26,16 @@ const FreeSequence = () => {
       const userData = await userResponse.json();
       const userId = userData.id;
 
-      // Obtém os sequences livres(usuario admin)
-      const sequenceResponse = await fetch(`${API_URL}/sequence-games/freesequence`, {
+      // Obtém os jogos livres(usuario admin)
+      const gallowResponse = await fetch(`${API_URL}/gallow/freegallow`, {
         method: "GET"
       });
 
-      const sequenceData = await sequenceResponse.json();
-      setSequences(sequenceData);
+      const gallowData = await gallowResponse.json();
+      setGallows(gallowData);
     };
 
-    fetchSequences();
+    fetchGallows();
   }, [navigate]);
 
 
@@ -45,13 +45,13 @@ const FreeSequence = () => {
       <div className="my-activities-container">
         <h2>Minhas Atividades</h2>
         <div className="quiz-list">
-          {sequences.length === 0 ? (
-            <p>Você ainda não criou nenhum Jogo da sequencia.</p>
+          {gallows.length === 0 ? (
+            <p>Você ainda não criou nenhum Jogo da Forca.</p>
           ) : (
-            sequences.map((sequence) => (
-              <div key={sequence.id} className="quiz-card" onClick={() => navigate(`/sequence-games/${sequence.id}`)}>
-                <img src="/images/sequencia.png" alt="Sequencia" className="sequencia-image" />
-                <h3>{sequence.title}</h3>
+            gallows.map((gallow) => (
+              <div key={gallow.id} className="quiz-card" onClick={() => navigate(`/gallow/${gallow.id}`)}>
+                <img src="/images/forca.png" alt="Forca" className="forca-image" />
+                <h3>{gallow.title}</h3>
               </div>
             ))
           )}
@@ -61,4 +61,4 @@ const FreeSequence = () => {
   );
 };
 
-export default FreeSequence;
+export default FreeGallow;

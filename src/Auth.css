@@ -91,4 +91,5 @@ body, html {
   width: 260px;
   height: 260px;
   object-fit: contain;
+  border-radius: 12px;
 }

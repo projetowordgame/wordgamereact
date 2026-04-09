@@ -7,9 +7,9 @@
     align-items: center;
     gap: 10px;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: rgb(170, 11, 255);
+    color: rgb(3, 10, 44);
     text-align: center;
-    padding: 80px 10px 10px 10px;
+    padding: 80px 0 ;
   }
   
   .container-logo-home {
@@ -17,9 +17,9 @@
     align-items: center;
     justify-content: center;
     gap: 16px;
-    background-color: rgb(91, 6, 227);
-    height: 200px;
-    padding: 0 22px;
+    background-color: rgb(3, 10, 44);
+    height: 160px;
+    padding: 0 50px 30px;
     flex-wrap: wrap;
     text-align: center;
   }
@@ -49,35 +49,27 @@
   
  .h3-home {
     font-size: 42px;
-    color: rgb(170, 11, 255);
+    color: rgb(224, 255, 255);
     text-align: center;
   }
   
   .p-home {
     font-size: 20px;
-    color: rgb(91, 6, 227);
+    color: rgb(224, 255, 255);
     text-align: start;
   }
   
   .li-home {
     font-size: 20px;
-    color: rgb(91, 6, 227);
+    color: rgb(224, 255, 255);
     text-align: start;
     padding: 0 0 0 20px;
   }
-  
-  .span-home {
-    font-size: 100px;
-    margin-right: 33px;
-  }
-  
-  .span-home#montain {
-    font-size: 120px;
-  }
-  
+    
   .footer-home {
+    height: 300px;
     text-align: center;
-    color: #12006d;
+    color: rgb(255, 255, 255);
     padding: 20px;
   }
   

@@ -43,10 +43,10 @@ const MyActivities = () => {
       setSequenceGames(await seqResponse.json());
 
       // 🔹 Jogos da Forca
-      // const hangResponse = await fetch(`${API_URL}/hangman-games/user/${userId}`, {
-      //   headers: { Authorization: `Bearer ${token}` },
-      // });
-      // setHangmanGames(await hangResponse.json());
+      const hangResponse = await fetch(`${API_URL}/gallow/user/${userId}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      setHangmanGames(await hangResponse.json());
     };
 
     fetchGames();
@@ -79,7 +79,7 @@ const MyActivities = () => {
 
       if (type === "quizzes") setQuizzes(quizzes.filter((q) => q.id !== id));
       if (type === "sequence-games") setSequenceGames(sequenceGames.filter((g) => g.id !== id));
-      // if (type === "hangman-games") setHangmanGames(hangmanGames.filter((g) => g.id !== id));
+      if (type === "gallow") setHangmanGames(hangmanGames.filter((g) => g.id !== id));
     } else {
       Swal.fire("Erro!", "Não foi possível excluir o jogo.", "error");
     }
@@ -127,7 +127,7 @@ const MyActivities = () => {
                 className="quiz-card"
                 onClick={() => navigate(`/sequence-games/${game.id}`)}
               >
-                <img src="/images/sequencia.jpg" alt="Sequência" className="quiz-image" />
+                <img src="/images/sequencia.png" alt="Sequência" className="quiz-image" />
                 <h3>{game.title}</h3>
                 <Trash2
                   className="delete-icon"
@@ -144,7 +144,7 @@ const MyActivities = () => {
         <hr />
 
         {/* --- Jogos da Forca --- */}
-        {/* <h3>Jogos da Forca</h3>
+        <h3>Jogos da Forca</h3>
         <div className="quiz-list">
           {hangmanGames.length === 0 ? (
             <p>Nenhum jogo da forca criado.</p>
@@ -153,7 +153,7 @@ const MyActivities = () => {
               <div
                 key={game.id}
                 className="quiz-card"
-                onClick={() => navigate(`/hangman/${game.id}`)}
+                onClick={() => navigate(`/gallow/${game.id}`)}
               >
                 <img src="/images/forca.png" alt="Forca" className="quiz-image" />
                 <h3>{game.title}</h3>
@@ -161,13 +161,13 @@ const MyActivities = () => {
                   className="delete-icon"
                   onClick={(e) => {
                     e.stopPropagation();
-                    deleteGame(game.id, "hangman-games");
+                    deleteGame(game.id, "gallow");
                   }}
                 />
               </div>
             ))
           )}
-        </div> */}
+        </div>
       </div>
     </>
   );
