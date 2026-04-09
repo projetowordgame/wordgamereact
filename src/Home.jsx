@@ -17,20 +17,17 @@ const Home = () => {
 
       <div className="home-container">
         <main id="conteudo" className="container-logo-home" role="main">
-          <img src="logo.png" alt="Logotipo do Kids Games" />
+          <img src="logo.png" alt="Logotipo do GameLearn" />
           <h1 className="head-home">
             Agora ensinar e aprender ficou mais divertido!
-            <span className="span-home" role="img" aria-label="bandeira de chegada">
-              🏁
-            </span>
           </h1>        
         </main>
 
         <section className="section-home">                
           <div>
-            <h3 className="h3-home">O que é o Kids Games?</h3>
+            <h3 className="h3-home">O que é o GameLearn?</h3>
             <p className="p-home">
-              O Kids Games é uma plataforma de aprendizado interativa que transforma o ensino e aprendizado em uma experiência divertida e envolvente. 
+              O GameLearn é uma plataforma de aprendizado interativa que transforma o ensino e aprendizado em uma experiência divertida e envolvente. 
               Com jogos educativos, quizzes e atividades dinâmicas, os alunos podem aprender enquanto se divertem.
             </p>  
           </div>
@@ -38,8 +35,7 @@ const Home = () => {
           <div>
             <h3 className="h3-home">Como funciona?</h3>
             <p className="p-home">
-              Os professores podem criar atividades personalizadas ativando assim a criatividade e engajamento dos alunos, despertando o interesse dos alunos que têm uma experiência de aprendizado mais dinâmica e divertida, 
-              tendo acesso a uma variedade de jogos e quizzes para praticar o que aprenderam enquanto o professor avalia o nível de aprendizado e interesse dos alunos. 
+              Ao criarem atividades personalizadas, os professores estimulam a criatividade e o engajamento dos alunos. Isso desperta o interesse da turma por meio de uma experiência de aprendizado dinâmica e divertida, que utiliza jogos e quizzes para a prática do conteúdo, enquanto o docente acompanha o progresso e o nível de interesse em tempo real. 
             </p>
           </div>
 
@@ -55,33 +51,29 @@ const Home = () => {
           </div>
 
           <div>
-            <h3 className="h3-home">Benefícios do Kids Games</h3>
+            <h3 className="h3-home">Benefícios do GameLearn</h3>
             <p className="p-home">
-              Com o Kids Games, os alunos podem aprender de forma mais eficaz e interativa. 
-              A plataforma é projetada para ajudar os alunos a reter informações de maneira mais eficiente, tornando o aprendizado uma experiência agradável.
+              Com o GameLearn, o aprendizado torna-se mais eficaz e interativo. Nossa plataforma foi projetada para potencializar a retenção de conhecimento, transformando o estudo em uma experiência envolvente e prazerosa.
             </p>
           </div>
 
           <div>
             <h3 className="h3-home">Quem pode usar?</h3>
             <p className="p-home">
-              O Kids Games é ideal para alunos de todas as idades, professores e educadores. 
-              A plataforma é projetada para ser acessível e fácil de usar, permitindo que todos aproveitem os benefícios do aprendizado baseado em jogos.
+              O GameLearn é ideal para alunos de todas as idades e para educadores que buscam inovação. Com uma interface intuitiva e acessível, garantimos que todos possam extrair o máximo do aprendizado baseado em jogos.O GameLearn é ideal para alunos de todas as idades e educadores que buscam inovação. Com uma interface intuitiva e desenhada para ser acessível, entregamos uma experiência descomplicada que democratiza os benefícios da gamificação, garantindo que todos possam extrair o máximo do aprendizado baseado em jogos.
             </p> 
           </div>
 
           <div>
             <h3 className="h3-home">Como começar?</h3>
             <p className="p-home">
-              Para começar a usar o Kids Games, basta se inscrever na nossa plataforma. 
-              Você pode criar uma conta gratuita e começar a explorar nossos jogos e atividades educativas. 
-              É fácil e rápido!
+              Pronto para transformar o aprendizado? Inscreva-se no GameLearn! Em poucos minutos, você cria sua conta gratuita e acessa todas as nossas atividades interativas. O acesso é imediato e sem complicações.
             </p>  
           </div>
         </section>      
 
         <footer className="footer-home" role="contentinfo">
-          <p>© 2025 Kids Games. Todos os direitos reservados.</p>
+          <p>© 2026 GameLearn. Todos os direitos reservados.</p>
         </footer>
       </div>
     </>
