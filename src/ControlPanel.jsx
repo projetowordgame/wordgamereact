@@ -105,6 +105,66 @@ const ControlPanel = () => {
     }
   };
 
+  const handleGenerateReport = async () => {
+    try {
+      setLoadingAnalytics(true);
+      const quizzId = parseInt(selectedQuizForAnalytics);
+
+      if (!quizzId) {
+        Swal.fire({
+          icon: "warning",
+          title: "Selecione um quiz",
+          text: "Por favor, selecione um quiz antes de gerar o relatório.",
+          customClass: {
+            popup: "swal-wide",
+            confirmButton: "swal-button",
+          },
+        });
+        setLoadingAnalytics(false);
+        return;
+      }
+
+      // Chama o endpoint para gerar o relatório
+      const response = await fetch(
+        `${API_URL}/quizzes/generate-report/${quizzId}`,
+        {
+          method: "POST",
+        }
+      );
+
+      if (!response.ok) {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Erro ao gerar relatório");
+      }
+
+      // Atualiza a tabela de análises
+      await fetchQuizzAnalytics();
+
+      Swal.fire({
+        icon: "success",
+        title: "Relatório Gerado",
+        text: "Relatório de todos os alunos foi gerado com sucesso!",
+        customClass: {
+          popup: "swal-wide",
+          confirmButton: "swal-button",
+        },
+      });
+    } catch (error) {
+      console.error("Erro ao gerar relatório:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Erro",
+        text: error.message || "Não foi possível gerar o relatório.",
+        customClass: {
+          popup: "swal-wide",
+          confirmButton: "swal-button",
+        },
+      });
+    } finally {
+      setLoadingAnalytics(false);
+    }
+  };
+
   const fetchData = async () => {
     const token = localStorage.getItem("token");
     try {
@@ -377,7 +437,25 @@ const ControlPanel = () => {
               {selectedQuizForAnalytics ? (
                 ranking.length > 0 ? (
                   <>
-                    <h3>Alunos no quiz</h3>
+                    <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
+                      <h3>Alunos no quiz</h3>
+                      <button 
+                        onClick={handleGenerateReport}
+                        disabled={loadingAnalytics}
+                        style={{ 
+                          backgroundColor: "#4CAF50", 
+                          color: "white",
+                          border: "none",
+                          padding: "10px 20px",
+                          fontSize: "16px",
+                          borderRadius: "6px",
+                          cursor: loadingAnalytics ? "not-allowed" : "pointer",
+                          opacity: loadingAnalytics ? 0.7 : 1
+                        }}
+                      >
+                        {loadingAnalytics ? "Gerando Relatório..." : "Gerar Relatório"}
+                      </button>
+                    </div>
                     <DataGrid
                       data={ranking}
                       columns={[
@@ -397,9 +475,18 @@ const ControlPanel = () => {
                           header: "Ação",
                           render: (item) => (
                             <button 
-                              className="button-analyze" 
                               onClick={() => handleAnalyzeClick(item)}
                               disabled={loadingAnalytics}
+                              style={{
+                                backgroundColor: "#007bff",
+                                color: "white",
+                                border: "none",
+                                padding: "8px 16px",
+                                fontSize: "14px",
+                                borderRadius: "4px",
+                                cursor: loadingAnalytics ? "not-allowed" : "pointer",
+                                opacity: loadingAnalytics ? 0.7 : 1
+                              }}
                             >
                               {loadingAnalytics ? "Carregando..." : "Analisar"}
                             </button>
