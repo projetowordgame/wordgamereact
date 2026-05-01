@@ -439,22 +439,38 @@ const ControlPanel = () => {
                   <>
                     <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "1rem" }}>
                       <h3>Alunos no quiz</h3>
-                      <button 
-                        onClick={handleGenerateReport}
-                        disabled={loadingAnalytics}
-                        style={{ 
-                          backgroundColor: "#4CAF50", 
-                          color: "white",
-                          border: "none",
-                          padding: "10px 20px",
-                          fontSize: "16px",
-                          borderRadius: "6px",
-                          cursor: loadingAnalytics ? "not-allowed" : "pointer",
-                          opacity: loadingAnalytics ? 0.7 : 1
-                        }}
-                      >
-                        {loadingAnalytics ? "Gerando Relatório..." : "Gerar Relatório"}
-                      </button>
+                      <div style={{ display: "flex", gap: "10px" }}>
+                        <button 
+                          onClick={handleGenerateReport}
+                          disabled={loadingAnalytics}
+                          style={{ 
+                            backgroundColor: "#4CAF50", 
+                            color: "white",
+                            border: "none",
+                            padding: "10px 20px",
+                            fontSize: "16px",
+                            borderRadius: "6px",
+                            cursor: loadingAnalytics ? "not-allowed" : "pointer",
+                            opacity: loadingAnalytics ? 0.7 : 1
+                          }}
+                        >
+                          {loadingAnalytics ? "Gerando Relatório..." : "Gerar Relatório"}
+                        </button>
+                        <button 
+                          onClick={() => window.open("https://datastudio.google.com/reporting/11d3f920-c06e-4a1c-a0e1-9ac56279a156", "_blank")}
+                          style={{ 
+                            backgroundColor: "#2196F3", 
+                            color: "white",
+                            border: "none",
+                            padding: "10px 20px",
+                            fontSize: "16px",
+                            borderRadius: "6px",
+                            cursor: "pointer"
+                          }}
+                        >
+                          Consultar Relatório Gerado
+                        </button>
+                      </div>
                     </div>
                     <DataGrid
                       data={ranking}
@@ -497,7 +513,7 @@ const ControlPanel = () => {
                     
                     {quizzAnalytics.length > 0 && (
                       <>
-                        <h3 style={{ marginTop: "2rem" }}>Tabela de Análises Salvas</h3>
+                        <h3 style={{ marginTop: "2rem" }}>Ultimo relatório salvo - Looker Studio</h3>
                         <DataGrid
                           data={quizzAnalytics}
                           columns={[
