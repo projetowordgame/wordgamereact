@@ -511,7 +511,7 @@ const ControlPanel = () => {
                       ]}
                     />
                     
-                    {quizzAnalytics.length > 0 && (
+                    {/* {quizzAnalytics.length > 0 && (
                       <>
                         <h3 style={{ marginTop: "2rem" }}>Ultimo relatório salvo - Looker Studio</h3>
                         <DataGrid
@@ -537,7 +537,7 @@ const ControlPanel = () => {
                           ]}
                         />
                       </>
-                    )}
+                    )} */}
                   </>
                 ) : (
                   <p>Sem dados</p>
